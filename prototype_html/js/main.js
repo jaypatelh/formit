@@ -1,11 +1,12 @@
-var draw = d3.select('#main').append("svg:svg");
+var draw = d3.select('#main').append("svg:svg")
+	.attr('height', 550);
 
 var drag = d3.behavior.drag()
 						.on('drag', circledragmove)
 						.on('dragstart', circledragstart)
 						.on('dragend', circledragend);
 
-draw.on('dblclick', function(){
+draw.on('click', function(){
 	var svg = d3.select(this);
 	var p = d3.svg.mouse(this);
 	svg.append('svg:circle')
