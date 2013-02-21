@@ -20,6 +20,8 @@ body{
 	fill: white;
 }
 
-.selected{
-
+.selected_dancer{
+	stroke: black;
+	stroke-width: 3px;
+	fill: #ffbb78;
 }
