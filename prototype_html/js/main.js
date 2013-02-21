@@ -30,7 +30,7 @@ window.formation = {
 					.attr('cx', function(d){ return d.x })
 					.attr('cy', function(d){ return d.y })
 					.attr('class', function(d){ return d.class })
-					.style('stroke', function(d){ return d.strokeColor})
+					.style('fill', function(d){ return d.fillColor})
 					.call(drag)
 					.on('click', handleDancerClick)
 					.transition()
@@ -78,9 +78,9 @@ window.formation = {
 	colorSelected: function(color){
 		console.log(parseInt(color));
 		for(var i = 0; i<this.circles.length; i++){
-			if(this.circles[i].class === 'selected_dancer') this.circles[i].strokeColor = colors(parseInt(color));
+			if(this.circles[i].class === 'selected_dancer') this.circles[i].fillColor = colors(parseInt(color));
 			this.svg.selectAll('circle').data(this.circles)
-				.style('stroke', function(d){ console.log(d.strokeColor);return d.strokeColor});
+				.style('fill', function(d){ console.log(d.fillColor);return d.fillColor});
 		}
 	},
 	removeSelected: function(){
@@ -99,7 +99,7 @@ function Dancer(d_id,x,y){
 	this.y = y;
 	this.class = 'dancer';
 	this.r = NORMAL_RADIUS;
-	this.strokeColor = 'black';
+	this.fillColor = 'white';
 	return this;
 }
 

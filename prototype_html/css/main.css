@@ -15,11 +15,13 @@ body{
 }
 
 .dancer{
+	stroke: grey;
 	stroke-width: 3px;
 	fill: white;
 }
 
 .selected_dancer{
+	stroke: black;
 	stroke-width: 3px;
 	fill: #ffbb78;
 }
