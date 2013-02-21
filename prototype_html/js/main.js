@@ -1,7 +1,13 @@
+NORMAL_RADIUS = 30;
+
 window.formation = {
 	circles: new Array(),
 	dragging: false,
 	d_id: 0,
+
+	DRAGGING_RADIUS: 50,
+	
+
 	svg: d3.select('#main').append("svg:svg").attr('height', 550),
 
 	init: function(){
@@ -39,12 +45,11 @@ window.formation = {
 
 		function circledragstart(d){
 			obj.dragging = true;
-			d.setSelected()
 			d3.select(this)
 				.transition()
 				.duration(400)
 				.attr('class', function(d){ return d.class})
-				.attr('r', 40);
+				.attr('r', obj.DRAGGING_RADIUS);
 		}
 
 		function circledragend(d){
@@ -52,7 +57,7 @@ window.formation = {
 				.transition()
 				.duration(200)
 				.attr('class', function(d){ return d.class})
-				.attr('r', 25)
+				.attr('r', NORMAL_RADIUS)
 				.each('end', function(){ obj.dragging = false;});
 		}
 
@@ -72,11 +77,12 @@ window.formation = {
 		//TODO
 	},
 	removeSelected: function(){
-		for(var i = 0; i < this.circles.length; i++){
-			if(this.circles[i].class === 'selected_dancer'){
-				this.circles[i].splice(i, 1);
-			}
-		}
+		this.circles = this.circles.filter(function(e){ return e.class != 'selected_dancer'});
+		this.svg.selectAll('circle').data(this.circles, function(d){ return d.d_id})
+			.exit().transition()
+			.duration(200)
+			.attr('r', 0)
+			.remove();
 	}
 }
 
@@ -85,7 +91,7 @@ function Dancer(d_id,x,y){
 	this.x = x;
 	this.y = y;
 	this.class = 'dancer';
-	this.r = 25;
+	this.r = NORMAL_RADIUS;
 	return this;
 }
 
