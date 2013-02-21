@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="textcss">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="/ico/favicon.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Team Dance</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="prototyping.html">Prototyping/Wizard of Oz</a></li>
+              <li class="active"><a href="#">Prototype I</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="row">
+        <div class="hero-unit">
+          <h1>Functional Prototype I</h1>
+        </div>
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span12">
+          <h2>Prototype Screenshots</h2>
+          <p>Although our final implementation will be a native iOS app, we created a lower-fidelity implementation in HTML5 for user-testing purposes. The following are a couple of screenshots conveying the basic functionality of the current prototype.</p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="span12">
+          <h2> Feature Choices </h2>
+          <p>Based off our results from Wizard-of-Oz testing last week, we have decided to proceed with an interface that combines certain aspects of the traditional and gestural UI. The following are a list of features we hope to implement in our final product: </p>
+	      <ul>
+            <li>Create multiple formations on a canvas view - From our testing last week, we learned that the birds-eye view of a formation was intuitive for users. Since a given piece of choreography can have multiple formations, the ability to create multiple formations is necessary.</li>
+			<li>Save formations for later and notify user appropriately - The formations are created for the purpose of being viewed later. A feature we were missing last week was some type of notification to indicate whether or not a formation was saved, which got extremely confusing for users.</li>
+			<li>When a new formation is created, have the canvas display the previous formation instead of being completely blank. - When users created a new formation, they had to constantly swipe back and forth between formations to remember what dancers were there and where they were. This feature will hopefully make the process run smoother. </li>
+			<li>Affix the list of dancers to the side of the app - The list of dancers is information that is pretty much always relevant in the formation creation process, so there is no need to hide the menu.</li>
+			<li>Create a timeline view - When there are multiple formations and songs going on, it is easy for the user to forget and become confused with where they are chronologically in the set. Having a timeline view allows users to see where they are working, and the view formations within their chronological context.</li>
+			<li>Dot customization with colors and labels - To make visualizing the group easier, the user can label each dot with a dancer name and a unique color representing which choreography “block” that person is in.</li>
+			<li>Swipe gesture to move back and forth between formations - During user testing, this seemed to be an intuitive way to switch between formations because it was a quick gesture and kept the chronology of formations.</li>
+			<li>Adding a “songs” feature to allow users to categorize formations into songs and rearrange the order of songs in a set - This feature will help the user organize the multiple formations involved in a single set. It also makes the process of rearranging the order of songs less complicated, since re-ordering the songs will move the corresponding formations around accordingly. This extra level of organization will also help the user remember what piece of choreography a particular formation is meant for.</li>
+			<li>Creating a grid that dots can lock to - This makes placing and precise alignment of dots easier for the users. That way, they will be less concentrated on the absolute placement and more focused on the relative location.</li>
+          <ul>
+        </div>        
+      </div>
+      
+      <div class="row">
+        <div class="span12">
+          <h2> Implementation Progress </h2>
+          <p> For this first prototype, we wanted to implement the basic features necessary to produce the experience of creating a formation. These are the features available in this version:<p>
+		  <ul>
+		  	    <li>Set an individual formation (there is no save function yet, so multiple formations can't be created)</li>
+				<li>Create/add dots to the canvas</li>
+				<li>Hold and drag dots to reposition them on the canvas (multi-touch is enabled)</li>
+				<li>Change dot colors to represent separate blocking</li>
+				<li>Create a list of dancers' names</li>
+				<li>Label an individual dot with a dancer's name</li>
+				<li>Select multiple dots at once (coloration to indicate selection)</li>
+				<li>Deleting dots (individual ones or selected groups)</li>
+		  </ul>
+        </div>
+
+        <div class="span12">
+          <h3>Remaining Implementation</h3>
+          <h5>Roughly prioritized </h5>
+          <ul>
+			  <li>Creating/saving multiple formations</li>
+			  <li>Adding "songs" feature - organizing formations into songs</li>
+			  <li>Timeline view of formations</li>
+			  <li>Having previous formation show in new formation</li>
+			  <li>Grid for dots to lock onto</li>
+			  <li>Swiping between formations</li>
+          </ul>
+		</div>
+		
+		<div class="span12">
+			<h3>Design Issues</h3>
+			<p>The following is a list of feature that we know we want incorporated into the final product, but we are still ambiguous as to how they should be implemented.</p>
+			<ul>
+				<li>How to display the previous formation on a new formation (faded overlay vs. placing dots there)</li>
+				<li>Where timeline should go (navigational breadcrumb that fades in and out vs. affixed to bottom of screen)</li>
+				<li>How to represent the "songs" feature (list view on side vs. coloration vs. table of contents)</li>
+			</ul>
+		</div>
+		
+      </div>
+      <hr>
+      <footer>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+  </body>
+</html>
