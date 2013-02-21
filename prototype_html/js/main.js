@@ -1,5 +1,3 @@
-colors = d3.scale.category10();
-
 var svg = d3.select('#main').append("svg:svg")
 	.attr('height', 550);
 
