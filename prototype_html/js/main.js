@@ -11,7 +11,6 @@ window.formation = {
 								.on('dragend', circledragend);
 		var obj = this;
 		svg.on('click', function(){
-			console.log(obj.dragging);
 			if(!obj.dragging){
 				var svg = d3.select(this);
 				var p = d3.svg.mouse(this);
@@ -21,34 +20,36 @@ window.formation = {
 					.enter().append('svg:circle')
 					.attr('r', 1)
 					.attr('cx', function(d){ return d.x })
-					.attr('cy', function(d){ return d.y})
-					.attr('class', function(d){ return d.class})
+					.attr('cy', function(d){ return d.y })
+					.attr('class', function(d){ return d.class })
 					.call(drag)
-					.on('click', function(){
-						d3.event.stopPropagation();
-					})
+					.on('click', handleDancerClick)
 					.transition()
 						.attr('r', function(d){ return d.r})
 						.duration(300);
 			}
 		});
 
+		function handleDancerClick(d){
+			d.toggleSelected();
+			d3.select(this).attr('class', function(d){ return d.class });
+			d3.event.stopPropagation();		
+		}
+
 		function circledragstart(d){
-			this.dragging = true;
-			d.toggleSelected()
+			obj.dragging = true;
+			d.setSelected()
 			d3.select(this)
 				.transition()
-				.duration(300)
+				.duration(400)
 				.attr('class', function(d){ return d.class})
 				.attr('r', 40);
 		}
 
 		function circledragend(d){
-			var obj = this;
-			d.toggleSelected()
 			d3.select(this)
 				.transition()
-				.duration(300)
+				.duration(200)
 				.attr('class', function(d){ return d.class})
 				.attr('r', 25)
 				.each('end', function(){ obj.dragging = false;});
@@ -77,6 +78,10 @@ function Dancer(x,y){
 	this.class = 'dancer';
 	this.r = 25;
 	return this;
+}
+
+Dancer.prototype.setSelected = function(){
+	this.class = 'selected_dancer';
 }
 
 Dancer.prototype.toggleSelected = function(){
