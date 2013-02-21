@@ -1,22 +1,23 @@
 window.formation = {
 	circles: new Array(),
 	dragging: false,
+	d_id: 0,
+	svg: d3.select('#main').append("svg:svg").attr('height', 550),
 
 	init: function(){
-		var svg = d3.select('#main').append("svg:svg")
-			.attr('height', 550);
 		var drag = d3.behavior.drag()
 								.on('drag', circledragmove)
 								.on('dragstart', circledragstart)
 								.on('dragend', circledragend);
 		var obj = this;
-		svg.on('click', function(){
+		this.svg.on('click', function(){
 			if(!obj.dragging){
 				var svg = d3.select(this);
 				var p = d3.svg.mouse(this);
-				var dancer = new Dancer(p[0], p[1]);
+				var dancer = new Dancer(obj.d_id,p[0], p[1]);
+				obj.d_id++;
 				obj.circles.push(dancer);
-				svg.selectAll('circle').data(obj.circles)
+				svg.selectAll('circle').data(obj.circles, function(d){ return d.d_id})
 					.enter().append('svg:circle')
 					.attr('r', 1)
 					.attr('cx', function(d){ return d.x })
@@ -70,9 +71,17 @@ window.formation = {
 	colorSelected: function(i){
 		//TODO
 	},
+	removeSelected: function(){
+		for(var i = 0; i < this.circles.length; i++){
+			if(this.circles[i].class === 'selected_dancer'){
+				this.circles[i].splice(i, 1);
+			}
+		}
+	}
 }
 
-function Dancer(x,y){
+function Dancer(d_id,x,y){
+	this.d_id = d_id;
 	this.x = x;
 	this.y = y;
 	this.class = 'dancer';

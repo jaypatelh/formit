@@ -23,5 +23,5 @@ body{
 .selected_dancer{
 	stroke: black;
 	stroke-width: 3px;
-	fill: steelblue;
+	fill: #ffbb78;
 }
