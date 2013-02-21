@@ -22,7 +22,7 @@ draw.on('click', function(){
 
 function circledragstart(d){
 	d3.select(this)
-		.attr('r', 30);
+		.attr('r', 40);
 }
 
 function circledragend(d){
@@ -31,8 +31,8 @@ function circledragend(d){
 }
 
 function circledragmove(d) {
-	var p = d3.svg.mouse(this);
+	console.log(d3.event)
   d3.select(this)
-      .attr("cx", p[0])
-      .attr("cy", p[1]);
+      .attr("cx", d3.event.x)
+      .attr("cy", d3.event.y);
 }
