@@ -1,6 +1,5 @@
 window.sidebar = {
 	init: function(){
-		var colors = d3.scale.category10();
 		$(".add_dancer").click(function(){
 			$(".footer_dancers").before("<li><input type='text' class='dancer_name_input'></input></li>");
 

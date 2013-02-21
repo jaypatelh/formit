@@ -1,6 +1,6 @@
 NORMAL_RADIUS = 30;
 
-//colors = d3.scale.category10(;
+colors = d3.scale.category10();
 window.formation = {
 	circles: new Array(),
 	dragging: false,
@@ -76,8 +76,9 @@ window.formation = {
 	},
 
 	colorSelected: function(color){
+		console.log(parseInt(color));
 		for(var i = 0; i<this.circles.length; i++){
-			if(this.circles[i].class === 'selected_dancer') this.circles[i].strokeColor = d3.scale.category10()(color);
+			if(this.circles[i].class === 'selected_dancer') this.circles[i].strokeColor = colors(parseInt(color));
 			this.svg.selectAll('circle').data(this.circles)
 				.style('stroke', function(d){ console.log(d.strokeColor);return d.strokeColor});
 		}
