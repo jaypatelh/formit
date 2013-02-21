@@ -1,5 +1,6 @@
 NORMAL_RADIUS = 30;
 
+//colors = d3.scale.category10(;
 window.formation = {
 	circles: new Array(),
 	dragging: false,
@@ -29,6 +30,7 @@ window.formation = {
 					.attr('cx', function(d){ return d.x })
 					.attr('cy', function(d){ return d.y })
 					.attr('class', function(d){ return d.class })
+					.style('stroke', function(d){ return d.strokeColor})
 					.call(drag)
 					.on('click', handleDancerClick)
 					.transition()
@@ -73,8 +75,12 @@ window.formation = {
 		//TODO
 	},
 
-	colorSelected: function(i){
-		//TODO
+	colorSelected: function(color){
+		for(var i = 0; i<this.circles.length; i++){
+			if(this.circles[i].class === 'selected_dancer') this.circles[i].strokeColor = d3.scale.category10()(color);
+			this.svg.selectAll('circle').data(this.circles)
+				.style('stroke', function(d){ console.log(d.strokeColor);return d.strokeColor});
+		}
 	},
 	removeSelected: function(){
 		this.circles = this.circles.filter(function(e){ return e.class != 'selected_dancer'});
@@ -92,6 +98,7 @@ function Dancer(d_id,x,y){
 	this.y = y;
 	this.class = 'dancer';
 	this.r = NORMAL_RADIUS;
+	this.strokeColor = 'black';
 	return this;
 }
 
@@ -103,5 +110,11 @@ Dancer.prototype.toggleSelected = function(){
 	if(this.class === 'dancer') this.class = 'selected_dancer';
 	else this.class = 'dancer';
 }
+
+$(function(){
+	$('#delete').on('click', function(){
+		formation.removeSelected();
+	});
+});
 
 formation.init();
