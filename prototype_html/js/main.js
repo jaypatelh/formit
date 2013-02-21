@@ -1,4 +1,6 @@
-var draw = d3.select('#main').append("svg:svg")
+colors = d3.scale.category10();
+
+var svg = d3.select('#main').append("svg:svg")
 	.attr('height', 550);
 
 var drag = d3.behavior.drag()
@@ -6,7 +8,7 @@ var drag = d3.behavior.drag()
 						.on('dragstart', circledragstart)
 						.on('dragend', circledragend);
 
-draw.on('click', function(){
+svg.on('click', function(){
 	var svg = d3.select(this);
 	var p = d3.svg.mouse(this);
 	svg.append('svg:circle')
