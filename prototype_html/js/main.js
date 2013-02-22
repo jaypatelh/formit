@@ -1,4 +1,5 @@
 NORMAL_RADIUS = 30;
+DRAGGING_RADIUS = 50;
 
 colors = d3.scale.category10();
 window.formation = {
@@ -6,52 +7,46 @@ window.formation = {
 	dragging: false,
 	d_id: 0,
 
-	DRAGGING_RADIUS: 50,
 	
 
 	svg: d3.select('#main').append("svg:svg").attr('height', 550),
 
 	init: function(){
+		var obj = this;
+		this.svg.on('click', function(){
+			obj.deselectAll();
+		})
+	},
+
+	deselectAll: function(){
+		for(var i = 0; i < this.circles.length; i++){
+			this.circles[i].class ='dancer';
+		}
+		this.svg.selectAll('circle').data(this.circles, function(d){ return d.d_id})
+			.attr('class', function(d){ return d.class })
+			.style('fill', function(d){ return d.fillColor})
+	},
+
+	nameSelected: function(name){
 		var drag = d3.behavior.drag()
 								.on('drag', circledragmove)
 								.on('dragstart', circledragstart)
 								.on('dragend', circledragend);
 		var obj = this;
-		this.svg.on('click', function(){
-			if(!obj.dragging){
-				var svg = d3.select(this);
-				var p = d3.svg.mouse(this);
-				var dancer = new Dancer(obj.d_id,p[0], p[1]);
-				obj.d_id++;
-				obj.circles.push(dancer);
-				svg.selectAll('circle').data(obj.circles, function(d){ return d.d_id})
-					.enter().append('svg:circle')
-					.attr('r', 1)
-					.attr('cx', function(d){ return d.x })
-					.attr('cy', function(d){ return d.y })
-					.attr('class', function(d){ return d.class })
-					.style('fill', function(d){ return d.fillColor})
-					.call(drag)
-					.on('click', handleDancerClick)
-					.transition()
-						.attr('r', function(d){ return d.r})
-						.duration(300);
-			}
-		});
-
 		function handleDancerClick(d){
+			obj.deselectAll();
 			d.toggleSelected();
 			d3.select(this).attr('class', function(d){ return d.class });
 			d3.event.stopPropagation();		
 		}
 
 		function circledragstart(d){
-			obj.dragging = true;
+			this.dragging = true;
 			d3.select(this)
 				.transition()
 				.duration(400)
 				.attr('class', function(d){ return d.class})
-				.attr('r', obj.DRAGGING_RADIUS);
+				.attr('r', DRAGGING_RADIUS);
 		}
 
 		function circledragend(d){
@@ -60,7 +55,7 @@ window.formation = {
 				.duration(200)
 				.attr('class', function(d){ return d.class})
 				.attr('r', NORMAL_RADIUS)
-				.each('end', function(){ obj.dragging = false;});
+				.each('end', function(){ this.dragging = false;});
 		}
 
 		function circledragmove(d) {
@@ -70,9 +65,22 @@ window.formation = {
 		      .attr("cx", d3.event.x)
 		      .attr("cy", d3.event.y);
 		}
-	},
-	nameSelected: function(name){
-		//TODO
+		
+		var dancer = new Dancer(this.d_id, 50, 50, name);
+		this.d_id++;
+		this.circles.push(dancer);
+		this.svg.selectAll('circle').data(this.circles, function(d){ return d.d_id})
+			.enter().append('svg:circle')
+			.attr('r', 1)
+			.attr('cx', function(d){ return d.x })
+			.attr('cy', function(d){ return d.y })
+			.attr('class', function(d){ return d.class })
+			.style('fill', function(d){ return d.fillColor})
+			.call(drag)
+			.on('click', handleDancerClick)
+			.transition()
+				.attr('r', function(d){ return d.r})
+				.duration(300);
 	},
 
 	colorSelected: function(color){
@@ -93,13 +101,14 @@ window.formation = {
 	}
 }
 
-function Dancer(d_id,x,y){
+function Dancer(d_id,x,y,name){
 	this.d_id = d_id;
 	this.x = x;
 	this.y = y;
 	this.class = 'dancer';
 	this.r = NORMAL_RADIUS;
 	this.fillColor = 'white';
+	this.name = name;
 	return this;
 }
 
