@@ -21,7 +21,7 @@ window.sidebar = {
 		});
 
 		var color_list = "<table width='100%' class='table_of_colors'>";
-		for(var i=0;i<10;i++){
+		for(var i=0;i<5;i++){
 			var color_item = "<tr><td height='25px' bgcolor='" + colors(i) + "' style='border:none'></td><input type='hidden' value='" + i + "'></input></tr>";
 			color_list += color_item;
 		}
@@ -43,14 +43,15 @@ window.sidebar = {
 			});
 
 			console.log("selected color: " + val);
+			formation.colorSelected(parseInt(val));
 
-			if(formation.colorSelected(val) == true){
+			/*if(formation.colorSelected(val) == true){
 				$(".table_of_colors td").css({
 					'border': 'none',
 					'height': '25px',
 					'width': '100%'
 				});
-			}
+			}*/
 		});
 	}
 }
