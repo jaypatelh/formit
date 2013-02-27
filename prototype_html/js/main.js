@@ -71,22 +71,22 @@ window.formation = {
 		  d3.select(this)
 		  	.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'});
 		}
+		
 		var dancer = new Dancer(this.d_id, 50, 50, name);
-		console.log(dancer);
 		this.d_id++;
 		this.circles.push(dancer);
 		this.svg.selectAll('g').data(this.circles, function(d){ return d.d_id})
 			.enter().append('svg:g')
 				.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'})
 				.call(drag)
-				.append('svg:circle')
-				.attr('r', 1)
-				.attr('class', function(d){ return d.class })
-				.style('fill', function(d){ return d.fillColor})
-				.on('click', handleDancerClick)
-				.transition()
-					.attr('r', function(d){ return d.r})
-					.duration(300);
+					.append('svg:circle')
+					.attr('r', 1)
+					.attr('class', function(d){ return d.class })
+					.style('fill', function(d){ return d.fillColor})
+					.on('click', handleDancerClick)
+					.transition()
+						.attr('r', function(d){ return d.r})
+						.duration(300);
 		this.svg.selectAll('g').append('svg:text')
 			.text(function(d){ return d.dancer_name})
 			.attr('text-anchor', 'middle');
