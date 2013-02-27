@@ -18,13 +18,20 @@ window.formation = {
 		})
 	},
 
+	renderCircles: function(){
+		this.svg.selectAll('circle').data(this.circles, function(d){ return d.d_id})
+			.attr('r', function(d){ return d.r})
+			.attr('cx', function(d){ return d.x })
+			.attr('cy', function(d){ return d.y })
+			.attr('class', function(d){ return d.class })
+			.style('fill', function(d){ return d.fillColor});
+	},
+
 	deselectAll: function(){
 		for(var i = 0; i < this.circles.length; i++){
 			this.circles[i].class ='dancer';
 		}
-		this.svg.selectAll('circle').data(this.circles, function(d){ return d.d_id})
-			.attr('class', function(d){ return d.class })
-			.style('fill', function(d){ return d.fillColor})
+		renderCircles();
 	},
 
 	nameSelected: function(name){
