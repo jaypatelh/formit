@@ -9,7 +9,7 @@ window.sidebar = {
 				var code = e.keyCode ? e.keyCode : e.which;
 				if(code == 13){
 					var dancer_name = this.value;
-					formation.nameSelected(name);
+					formation.nameSelected(dancer_name);
 					$(".footer_dancers").before("<li><a href='#'>" + dancer_name + "</a><input type='hidden' value='" + dancer_name + "'></input></li>");
 					$(".footer_dancers").prev().click(function(){
 						var name = $(this).find("input").val();
