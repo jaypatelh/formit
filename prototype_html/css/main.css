@@ -25,3 +25,7 @@ body{
 	stroke-width: 5px;
 	fill: #ffbb78;
 }
+
+.header{
+	font-weight:bold;
+}

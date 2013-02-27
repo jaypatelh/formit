@@ -15,7 +15,7 @@ window.sidebar = {
 						var name = $(this).find("input").val();
 						console.log("selected dancer name: " + name);
 					});
-					this.remove();
+					$(this).remove();
 				}
 			});
 		});
