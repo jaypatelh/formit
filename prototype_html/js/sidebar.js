@@ -57,7 +57,4 @@ window.sidebar = {
 	}
 }
 
-$(document).ready(function(){
-	sidebar.init();
-	dance.init();
-});
+

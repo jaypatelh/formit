@@ -7,6 +7,7 @@ window.dance = {
 	circles: new Array(),
 	dragging: false,
 	d_id: 0,
+	f_id: 0,
 
 	svg: d3.select('#main').insert("svg:svg").attr('height', 550),
 
@@ -14,7 +15,25 @@ window.dance = {
 		var obj = this;
 		this.svg.on('click', function(){
 			obj.deselectAll();
-		})
+		});
+		this.formations.push(this.circles);
+	},
+
+	previousFormation: function(){
+		if(this.f_id === 0) console.log("reached end");
+		else this.f_id -= 1;
+		this.circles = this.formations[this.f_id];
+	},
+
+	nextFormation: function(){
+		if(this.f_id === this.formations.length - 1) this.addNewFormation();
+		this.f_id += 1;
+		this.circles = this.formations[this.f_id];
+	},
+
+	addNewFormation: function(){
+		var newFormation = _.map(this.circles, function(d){ var o = new Object(); return _.extend(o, d);})
+		this.formations.push(newFormation);
 	},
 
 	renderCircles: function(){
@@ -119,8 +138,3 @@ window.dance = {
 	}
 }
 
-$(function(){
-	$('#delete').on('click', function(){
-		dance.removeSelected();
-	});
-});

@@ -4,13 +4,13 @@ svg{
 }
 
 #previous{
-	position: absolute;
+	position: fixed;
 	bottom: 25px;
 	right: 110px;
 }
 
 #next{
-	position: absolute;
+	position: fixed;
 	bottom: 25px;
 	right:30px;
 }
