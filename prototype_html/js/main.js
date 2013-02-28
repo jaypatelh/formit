@@ -2,12 +2,11 @@ NORMAL_RADIUS = 30;
 DRAGGING_RADIUS = 50;
 
 colors = d3.scale.category10();
-window.formation = {
+window.dance = {
+	formations: new Array(),
 	circles: new Array(),
 	dragging: false,
 	d_id: 0,
-
-	
 
 	svg: d3.select('#main').append("svg:svg").attr('height', 550),
 
@@ -26,9 +25,7 @@ window.formation = {
 	},
 
 	deselectAll: function(){
-		for(var i = 0; i < this.circles.length; i++){
-			this.circles[i].class ='dancer';
-		}
+		_.each(this.circles, function(d){ d.class = 'dancer';});
 		this.renderCircles();
 	},
 
@@ -40,9 +37,8 @@ window.formation = {
 		var obj = this;
 
 		function handleDancerClick(d){
-			console.log("clicked")
 			obj.deselectAll();
-			d.toggleSelected();
+			obj.toggleSelected(d);
 			d3.select(this).select('circle').attr('class', function(d){ return d.class });
 			d3.event.stopPropagation();		
 		}
@@ -72,7 +68,7 @@ window.formation = {
 		  	.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'});
 		}
 		
-		var dancer = new Dancer(this.d_id, 50, 50, name);
+		var dancer = this.createDancer(this.d_id, 50, 50, name);
 		this.d_id++;
 		this.circles.push(dancer);
 		this.svg.selectAll('g').data(this.circles, function(d){ return d.d_id})
@@ -93,12 +89,9 @@ window.formation = {
 	},
 
 	colorSelected: function(color){
-		console.log(parseInt(color));
-		for(var i = 0; i<this.circles.length; i++){
-			if(this.circles[i].class === 'selected_dancer') this.circles[i].fillColor = colors(parseInt(color));
-			this.svg.selectAll('circle').data(this.circles)
-				.style('fill', function(d){ console.log(d.fillColor);return d.fillColor});
-		}
+		_.each(this.circles, function(e){ if(e.class === 'selected_dancer') e.fillColor=colors(parseInt(color))});
+		this.svg.selectAll('circle').data(this.circles)
+			.style('fill', function(d){ console.log(d.fillColor);return d.fillColor});
 	},
 	removeSelected: function(){
 		this.circles = this.circles.filter(function(e){ return e.class != 'selected_dancer'});
@@ -107,33 +100,27 @@ window.formation = {
 			.duration(300)
 			.style('opacity', 0)
 			.remove();
+	},
+
+	toggleSelected: function(dancer){
+		if(dancer.class === 'dancer') dancer.class = 'selected_dancer';
+		else dancer.class = 'dancer';
+	},
+	createDancer: function(d_id,x,y,name){
+		obj = {}
+		obj.d_id = d_id;
+		obj.x = x;
+		obj.y = y;
+		obj.class = 'dancer';
+		obj.r = NORMAL_RADIUS;
+		obj.fillColor = 'white';
+		obj.dancer_name = name;
+		return obj;
 	}
-}
-
-function Dancer(d_id,x,y,name){
-	this.d_id = d_id;
-	this.x = x;
-	this.y = y;
-	this.class = 'dancer';
-	this.r = NORMAL_RADIUS;
-	this.fillColor = 'white';
-	this.dancer_name = name;
-	return this;
-}
-
-Dancer.prototype.setSelected = function(){
-	this.class = 'selected_dancer';
-}
-
-Dancer.prototype.toggleSelected = function(){
-	if(this.class === 'dancer') this.class = 'selected_dancer';
-	else this.class = 'dancer';
 }
 
 $(function(){
 	$('#delete').on('click', function(){
-		formation.removeSelected();
+		dance.removeSelected();
 	});
 });
-
-formation.init();

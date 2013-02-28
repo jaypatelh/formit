@@ -1,3 +1,4 @@
+//colors = d3.scale.category10();
 window.sidebar = {
 	init: function(){
 		$(".add_dancer").click(function(){
@@ -9,7 +10,7 @@ window.sidebar = {
 				var code = e.keyCode ? e.keyCode : e.which;
 				if(code == 13){
 					var dancer_name = this.value;
-					formation.nameSelected(dancer_name);
+					dance.nameSelected(dancer_name);
 					$(".footer_dancers").before("<li><a href='#'>" + dancer_name + "</a><input type='hidden' value='" + dancer_name + "'></input></li>");
 					$(".footer_dancers").prev().click(function(){
 						var name = $(this).find("input").val();
@@ -43,7 +44,7 @@ window.sidebar = {
 			});
 
 			console.log("selected color: " + val);
-			formation.colorSelected(parseInt(val));
+			dance.colorSelected(parseInt(val));
 
 			/*if(formation.colorSelected(val) == true){
 				$(".table_of_colors td").css({
@@ -58,4 +59,5 @@ window.sidebar = {
 
 $(document).ready(function(){
 	sidebar.init();
+	dance.init();
 });
