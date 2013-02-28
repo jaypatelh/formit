@@ -3,6 +3,18 @@ svg{
 	margin: 30px 30px 0;
 }
 
+#previous{
+	position: absolute;
+	bottom: 25px;
+	right: 110px;
+}
+
+#next{
+	position: absolute;
+	bottom: 25px;
+	right:30px;
+}
+
 body{
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;

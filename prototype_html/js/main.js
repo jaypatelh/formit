@@ -8,7 +8,7 @@ window.dance = {
 	dragging: false,
 	d_id: 0,
 
-	svg: d3.select('#main').append("svg:svg").attr('height', 550),
+	svg: d3.select('#main').insert("svg:svg").attr('height', 550),
 
 	init: function(){
 		var obj = this;
