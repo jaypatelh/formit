@@ -19,6 +19,14 @@ window.dance = {
 		this.formations.push(this.circles);
 	},
 
+	atEnd: function(){
+		return this.f_id === this.formations.length - 1;
+	},
+
+	atBeginning: function(){
+		return this.f_id === 0;
+	},
+
 	previousFormation: function(){
 		if(this.f_id === 0) console.log("reached end");
 		else this.f_id -= 1;
@@ -71,7 +79,6 @@ window.dance = {
 		var obj = this;
 
 		function handleDancerClick(d){
-			obj.deselectAll();
 			obj.toggleSelected(d);
 			d3.select(this).select('circle').attr('class', function(d){ return d.class });
 			d3.event.stopPropagation();		

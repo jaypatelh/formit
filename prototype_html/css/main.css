@@ -6,13 +6,21 @@ svg{
 #previous{
 	position: fixed;
 	bottom: 25px;
-	right: 110px;
+	right: 120px;
+}
+
+#formation_number{
+	font-size:25px;
+	position: fixed;
+	bottom: 28px;
+	right: 98px;
+	text-align: center;
 }
 
 #next{
 	position: fixed;
 	bottom: 25px;
-	right:30px;
+	right:35px;
 }
 
 body{
