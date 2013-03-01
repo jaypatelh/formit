@@ -23,12 +23,14 @@ window.dance = {
 		if(this.f_id === 0) console.log("reached end");
 		else this.f_id -= 1;
 		this.circles = this.formations[this.f_id];
+		this.renderCircles();
 	},
 
 	nextFormation: function(){
 		if(this.f_id === this.formations.length - 1) this.addNewFormation();
 		this.f_id += 1;
 		this.circles = this.formations[this.f_id];
+		this.renderCircles();
 	},
 
 	addNewFormation: function(){
@@ -37,10 +39,23 @@ window.dance = {
 	},
 
 	renderCircles: function(){
-		this.svg.selectAll('g').data(this.circles, function(d){ return d.d_id})
+		var groups = this.svg.selectAll('g').data(this.circles, function(d){ return d.d_id});
+		groups.transition()
+			.duration(500)
+			.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'})
 				.select('circle')
 				.attr('class', function(d){ return d.class })
 				.style('fill', function(d){ return d.fillColor})
+		// groups.enter().append()
+		// 	.style('opacity', 0)
+		// 	.transition()
+		// 		.duration(500)
+		//		.style('opacity', 1);
+		groups.exit()
+			.transition()
+				.duration(500)
+				.style('opacity', 0)
+				.remove();
 	},
 
 	deselectAll: function(){
