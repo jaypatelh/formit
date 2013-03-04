@@ -1,6 +1,9 @@
 $(document).ready(function(){
 	sidebar.init();
 	dance.init();
+	dance.addVerticalLines();
+	dance.addHorizontalLines();
+
 	if(dance.atBeginning()) $('#previous').addClass('disabled');
 	if(dance.atEnd()) $('#next').removeClass('btn-primary').addClass('btn-success')
 		.find('i').removeClass('icon-forward').addClass('icon-plus');
