@@ -2,7 +2,7 @@
 window.sidebar = {
 	init: function(){
 		$(".add_dancer").click(function(){
-			$(".footer_dancers").before("<li><input type='text' class='dancer_name_input'></input></li>");
+			$(".dancer_names").append("<li><input type='text' class='dancer_name_input'></input></li>");
 
 			$(".dancer_name_input").focus();
 			
@@ -11,8 +11,8 @@ window.sidebar = {
 				if(code == 13){
 					var dancer_name = this.value;
 					dance.nameSelected(dancer_name);
-					$(".footer_dancers").before("<li><a href='#'>" + dancer_name + "</a><input type='hidden' value='" + dancer_name + "'></input></li>");
-					$(".footer_dancers").prev().click(function(){
+					$(".dancer_names").append("<li><a href='#'>" + dancer_name + "</a><input type='hidden' value='" + dancer_name + "'></input></li>");
+					$(".dancer_names li:last-child").click(function(){
 						var name = $(this).find("input").val();
 						console.log("selected dancer name: " + name);
 					});

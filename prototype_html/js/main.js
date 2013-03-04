@@ -122,11 +122,8 @@ window.dance = {
 		}
 
 		function circledragend(d){
-			console.log(d.x + "," + d.y);
-			console.log(Math.round(d.x / LINES_VERT_DIST_APART));
 			d.x = Math.round(d.x / LINES_VERT_DIST_APART) * LINES_VERT_DIST_APART;
 			d.y = Math.round(d.y / LINES_HORIZ_DIST_APART) * LINES_HORIZ_DIST_APART;
-			console.log(d.x + "," + d.y);
 
 			d3.select(this)
 				.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'})
