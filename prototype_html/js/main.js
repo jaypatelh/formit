@@ -1,5 +1,7 @@
 NORMAL_RADIUS = 30;
 DRAGGING_RADIUS = 50;
+LINES_VERT_DIST_APART = 55;
+LINES_HORIZ_DIST_APART = 55;
 
 colors = d3.scale.category10();
 window.dance = {
@@ -9,7 +11,7 @@ window.dance = {
 	d_id: 0,
 	f_id: 0,
 
-	svg: d3.select('#main').insert("svg:svg").attr('height', 550),
+	svg: d3.select('#main').insert("svg:svg").attr('height', 550).attr('width', 825),
 
 	init: function(){
 		var obj = this;
@@ -17,6 +19,32 @@ window.dance = {
 			obj.deselectAll();
 		});
 		this.formations.push(this.circles);
+	},
+
+	addVerticalLines: function(){
+		var num_vert_lines = this.svg.attr('width') / LINES_VERT_DIST_APART;
+    for(var i=0;i<num_vert_lines;i++){
+    	this.svg.append("svg:line")
+    .attr("x1", LINES_VERT_DIST_APART*i)
+    .attr("y1", 0)
+    .attr("x2", LINES_VERT_DIST_APART*i)
+    .attr("y2", this.svg.attr('height'))
+    .style("stroke", "rgb(6,120,155)")
+    .style("stroke-opacity", "0.4");
+    }
+	},
+
+	addHorizontalLines: function(){
+		var num_horiz_lines = this.svg.attr('height') / LINES_HORIZ_DIST_APART;
+    for(var i=0;i<num_horiz_lines;i++){
+    	this.svg.append("svg:line")
+    .attr("x1", 0)
+    .attr("y1", LINES_HORIZ_DIST_APART*i)
+    .attr("x2", this.svg.attr('width'))
+    .attr("y2", LINES_HORIZ_DIST_APART*i)
+    .style("stroke", "rgb(6,120,155)")
+    .style("stroke-opacity", "0.4");
+    }
 	},
 
 	atEnd: function(){
@@ -94,12 +122,20 @@ window.dance = {
 		}
 
 		function circledragend(d){
-			d3.select(this).select('circle')
-				.transition()
-				.duration(200)
-				.attr('class', function(d){ return d.class})
-				.attr('r', NORMAL_RADIUS)
-				.each('end', function(){ this.dragging = false;});
+			console.log(d.x + "," + d.y);
+			console.log(Math.round(d.x / LINES_VERT_DIST_APART));
+			d.x = Math.round(d.x / LINES_VERT_DIST_APART) * LINES_VERT_DIST_APART;
+			d.y = Math.round(d.y / LINES_HORIZ_DIST_APART) * LINES_HORIZ_DIST_APART;
+			console.log(d.x + "," + d.y);
+
+			d3.select(this)
+				.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'})
+					.select('circle')
+					.transition()
+					.duration(200)
+					.attr('class', function(d){ return d.class})
+					.attr('r', NORMAL_RADIUS)
+					.each('end', function(){ this.dragging = false;});
 		}
 
 		function circledragmove(d) {
