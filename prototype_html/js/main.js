@@ -99,6 +99,10 @@ window.dance = {
 		this.renderCircles();
 	},
 
+	selectDancer: function(dancer){
+		dancer.class = 'selected_dancer';
+	},
+
 	nameSelected: function(name){
 		var drag = d3.behavior.drag()
 								.on('drag', circledragmove)
@@ -124,6 +128,7 @@ window.dance = {
 		function circledragend(d){
 			d.x = Math.round(d.x / LINES_VERT_DIST_APART) * LINES_VERT_DIST_APART;
 			d.y = Math.round(d.y / LINES_HORIZ_DIST_APART) * LINES_HORIZ_DIST_APART;
+			d.class = 'selected_dancer';
 
 			d3.select(this)
 				.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'})
