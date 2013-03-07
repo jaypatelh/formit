@@ -166,6 +166,7 @@ window.dance = {
 		_.each(this.circles, function(e){ if(e.class === 'selected_dancer') e.fillColor=colors(parseInt(color))});
 		this.svg.selectAll('circle').data(this.circles)
 			.style('fill', function(d){ console.log(d.fillColor);return d.fillColor});
+		this.deselectAll();
 	},
 	removeSelected: function(){
 		this.circles = this.circles.filter(function(e){ return e.class != 'selected_dancer'});
