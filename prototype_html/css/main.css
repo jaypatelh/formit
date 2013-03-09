@@ -1,6 +1,6 @@
 svg{
 	background-color: #EEEEEE;
-	margin: 30px 30px 0;
+	margin: 20px 20px 0;
 }
 
 #previous{
@@ -21,6 +21,21 @@ svg{
 	position: fixed;
 	bottom: 25px;
 	right:35px;
+}
+.timeline{
+	width:825px;
+	height:140px;
+	position: fixed;
+	bottom:25px;
+	right:20px;
+	overflow-x:scroll;
+	overflow-y:hidden;
+}
+.thumbnail_container{
+	width:1000px;
+}
+.thumb{
+	margin:10px 0;
 }
 
 body{

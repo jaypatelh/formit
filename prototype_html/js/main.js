@@ -11,7 +11,7 @@ window.dance = {
 	d_id: 0,
 	f_id: 0,
 
-	svg: d3.select('#main').insert("svg:svg").attr('height', 550).attr('width', 825),
+	svg: d3.select('#main').insert("svg:svg").attr('height', 550).attr('width', 780),
 
 	init: function(){
 		var obj = this;
