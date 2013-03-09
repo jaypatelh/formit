@@ -24,10 +24,10 @@ svg{
 }
 .timeline{
 	width:825px;
-	height:140px;
+	height:100px;
 	position: fixed;
-	bottom:25px;
-	right:20px;
+	bottom:10px;
+	left:200px;
 	overflow-x:scroll;
 	overflow-y:hidden;
 }
@@ -35,7 +35,7 @@ svg{
 	width:1000px;
 }
 .thumb{
-	margin:10px 0;
+	margin:5px 0;
 }
 
 body{
