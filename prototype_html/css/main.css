@@ -68,3 +68,12 @@ body{
 text{
 	font-weight: 900;
 }
+
+.dancer_names{
+	height: 250px;
+	overflow: scroll;
+}
+
+.dancer_name_input{
+	width:244px;
+}
