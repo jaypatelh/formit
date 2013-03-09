@@ -90,11 +90,11 @@ window.dance = {
 								.on('dragstart', this.circledragstart)
 								.on('dragend', this.circledragend);
 		var groups = this.svg.selectAll('g').data(this.circles, function(d){ return d.d_id});
-		groups.transition()
+		this.svg.selectAll('g').transition()
 			.duration(500)
 			.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'})
-				.select('circle')
-				.attr('class', function(d){ return d.class })
+		this.svg.selectAll('g').select('circle')
+				.attr('class', function(d){ console.log(d.class); return d.class })
 				.style('fill', function(d){ return d.fillColor})
 		new_groups = groups.enter().append('svg:g');
 		new_groups.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'})
@@ -103,9 +103,8 @@ window.dance = {
 				.attr('r', 1)
 				.attr('class', function(d){ return d.class })
 				.style('fill', function(d){ return d.fillColor})
-				.on('click', this.handleDancerClick)
 		dance.svg.selectAll('circle').transition()
-					.attr('r', function(d){ return d.r;})
+					.attr('r', function(d){ console.log('size: ' + d.r); return d.r;})
 					.duration(500);
 		new_groups.append('svg:text')
 			.text(function(d){ return d.dancer_name})
