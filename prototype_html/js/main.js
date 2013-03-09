@@ -15,12 +15,14 @@ window.dance = {
 	bold_opacity: "1.0",
 	bold_width: "2",
 
-
 	svg: d3.select('#main').insert("svg:svg").attr('height', 550).attr('width', 770),
+	
 	init: function(){
 		var obj = this;
 		this.svg.on('click', function(){
+			console.log("hello")
 			obj.deselectAll();
+			obj.renderCircles();
 		});
 		this.formations.push(this.circles);
 	},
@@ -102,9 +104,8 @@ window.dance = {
 				.attr('class', function(d){ return d.class })
 				.style('fill', function(d){ return d.fillColor})
 				.on('click', this.handleDancerClick)
-				
 		dance.svg.selectAll('circle').transition()
-					.attr('r', function(d){ console.log('size: ' + d.r); return d.r;})
+					.attr('r', function(d){ return d.r;})
 					.duration(500);
 		new_groups.append('svg:text')
 			.text(function(d){ return d.dancer_name})
@@ -120,37 +121,30 @@ window.dance = {
 		_.each(this.circles, function(d){ d.class = 'dancer';});
 		this.renderCircles();
 	},
-	handleDancerClick: function(d){
-			dance.toggleSelected(d);
-			dance.renderCircles();
-			d3.event.stopPropagation();	
-	},
+
 	selectDancer: function(dancer){
 		dancer.class = 'selected_dancer';
 	},
 	circledragstart: function(d){
-			this.dragging = true;
-			d3.select(this).select('circle')
-				.transition()
-				.duration(400)
-				.attr('class', function(d){ return d.class})
-				.attr('r', DRAGGING_RADIUS);
-		},
+		d.class = 'selected_dancer';
+		d3.select(this).select('circle')
+			.transition()
+			.duration(400)
+			.attr('class', function(d){ return d.class})
+			.attr('r', DRAGGING_RADIUS);
+	},
 
 	circledragend: function(d){
-			console.log(d.x + "," + d.y);
-			console.log(Math.round(d.x / LINES_VERT_DIST_APART));
-			d.x = Math.round(d.x / LINES_VERT_DIST_APART) * LINES_VERT_DIST_APART;
-			d.y = Math.round(d.y / LINES_HORIZ_DIST_APART) * LINES_HORIZ_DIST_APART;
-			console.log(d.x + "," + d.y);
-			d3.select(this)
-				.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'})
-					.select('circle')
-					.transition()
-					.duration(200)
-					.attr('class', function(d){ return d.class})
-					.attr('r', NORMAL_RADIUS)
-					.each('end', function(){ this.dragging = false;});
+		d.x = Math.round(d.x / LINES_VERT_DIST_APART) * LINES_VERT_DIST_APART;
+		d.y = Math.round(d.y / LINES_HORIZ_DIST_APART) * LINES_HORIZ_DIST_APART;
+		d3.select(this)
+			.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'})
+				.select('circle')
+				.transition()
+				.duration(200)
+				.attr('class', function(d){ return d.class})
+				.attr('r', NORMAL_RADIUS)
+				.each('end', function(){ this.dragging = false;});
 	},
 
 	circledragmove: function(d) {
@@ -177,7 +171,6 @@ window.dance = {
 					.attr('r', 1)
 					.attr('class', function(d){ return d.class })
 					.style('fill', function(d){ return d.fillColor})
-					.on('click', this.handleDancerClick)
 					.transition()
 						.attr('r', function(d){ return d.r})
 						.duration(300);
