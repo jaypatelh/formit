@@ -25,5 +25,21 @@ $(document).ready(function(){
 		if(dance.atEnd()) $('#next').removeClass('btn-primary').addClass('btn-success')
 			.find('i').removeClass('icon-forward').addClass('icon-plus');
 		$('#formation_number').html(dance.f_id + 1)
+	});
+	$('svg').hammer().on('swipeleft', function(){
+		dance.nextFormation();
+		dance.deselectAll();
+		$('#previous').removeClass('disabled');
+		if(dance.atEnd()) $('#next').removeClass('btn-primary').addClass('btn-success')
+			.find('i').removeClass('icon-forward').addClass('icon-plus');
+		$('#formation_number').html(dance.f_id + 1)
+	})
+	$('svg').hammer().on('swiperight', function(){
+		dance.previousFormation();
+		dance.deselectAll();
+		if(dance.atBeginning()) $(this).addClass('disabled');
+		$('#next').addClass('btn-primary').removeClass('btn-success')
+			.find('i').removeClass('icon-plus').addClass('icon-forward');
+		$('#formation_number').html(dance.f_id + 1)
 	})
 });

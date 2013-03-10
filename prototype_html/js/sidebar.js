@@ -30,7 +30,7 @@ window.sidebar = {
 
 		$(".blocks").append("<li>" + color_list + "</li>");
 
-		$(".table_of_colors td").click(function(){
+		$(".table_of_colors td").hammer().on('tap',function(){
 			var val = $(this).siblings("input").val();
 			$(".table_of_colors td").css({
 				'border': 'none',

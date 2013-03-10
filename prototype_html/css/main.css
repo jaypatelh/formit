@@ -17,11 +17,6 @@ svg{
 	text-align: center;
 }
 
-#next{
-	position: fixed;
-	bottom: 25px;
-	right:35px;
-}
 .timeline{
 	width:825px;
 	height:100px;
