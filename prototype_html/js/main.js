@@ -19,11 +19,14 @@ window.dance = {
 	
 	init: function(){
 		var obj = this;
-		this.svg.on('click', function(){
-			console.log("hello")
+		this.svg.on('mouseup', function(){
 			obj.deselectAll();
 			obj.renderCircles();
 		});
+		this.svg.on('touchend', function(){
+			obj.deselectAll();
+			obj.renderCircles();	
+		})
 		this.formations.push(this.circles);
 	},
 
@@ -126,6 +129,8 @@ window.dance = {
 	},
 	circledragstart: function(d){
 		d.class = 'selected_dancer';
+		console.log(d3.event)
+		d3.event.sourceEvent.stopPropagation();
 		d3.select(this).select('circle')
 			.transition()
 			.duration(400)
@@ -144,6 +149,7 @@ window.dance = {
 				.attr('class', function(d){ return d.class})
 				.attr('r', NORMAL_RADIUS)
 				.each('end', function(){ this.dragging = false;});
+		d3.event.sourceEvent.stopPropagation();
 	},
 
 	circledragmove: function(d) {
@@ -194,7 +200,6 @@ window.dance = {
 	},
 
 	toggleSelected: function(dancer){
-		console.log("dancer class is " + dancer.class);
 		if(dancer.class === 'dancer') {dancer.class = 'selected_dancer'; console.log("selecting dancer..");}
 		else {dancer.class = 'dancer'; console.log("deselecting dancer...");}
 	},
