@@ -19,11 +19,11 @@ window.dance = {
 	
 	init: function(){
 		var obj = this;
-		this.svg.on('mouseup', function(){
-			obj.deselectAll();
-			obj.renderCircles();
-		});
-		this.svg.on('touchend', function(){
+		// this.svg.on('mouseup', function(){
+		// 	obj.deselectAll();
+		// 	obj.renderCircles();
+		// });
+		this.svg.on('touchend', function(e){
 			obj.deselectAll();
 			obj.renderCircles();	
 		})
