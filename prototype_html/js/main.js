@@ -141,16 +141,18 @@ window.dance = {
 		dancer.class = 'selected_dancer';
 	},
 	circledragstart: function(d){
+		d.r = DRAGGING_RADIUS
 		d.class = 'selected_dancer';
 		d3.select(this).select('circle')
 			.transition()
 			.duration(400)
 			.attr('class', function(d){ return d.class})
-			.attr('r', DRAGGING_RADIUS);
+			.attr('r', function(d){ return d.r});
 		d3.event.sourceEvent.stopPropagation();
 	},
 
 	circledragend: function(d){
+		d.r = NORMAL_RADIUS
 		d.x = Math.round(d.x / LINES_VERT_DIST_APART) * LINES_VERT_DIST_APART;
 		d.y = Math.round(d.y / LINES_HORIZ_DIST_APART) * LINES_HORIZ_DIST_APART;
 		d3.select(this)
@@ -159,7 +161,7 @@ window.dance = {
 				.transition()
 				.duration(200)
 				.attr('class', function(d){ return d.class})
-				.attr('r', NORMAL_RADIUS)
+				.attr('r', function(d){ return d.r })
 				.each('end', function(){ this.dragging = false;});
 		d3.event.sourceEvent.stopPropagation();
 	},
