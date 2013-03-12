@@ -83,14 +83,28 @@ window.dance = {
 	previousFormation: function(){
 		if(this.f_id === 0) console.log("reached end");
 		else this.f_id -= 1;
-		this.circles = this.formations[this.f_id];
-		this.renderCircles();
+		this.showFormation(this.f_id);
+		//this.circles = this.formations[this.f_id];
+		//this.renderCircles();
 	},
 	nextFormation: function(){
-		if(this.f_id === this.formations.length - 1) this.addNewFormation();
+		if(this.f_id === this.formations.length - 1){
+			this.newFormation();
+		} else {
+			this.f_id += 1;
+			this.showFormation(this.f_id);
+		}
+		//this.circles = this.formations[this.f_id];
+		//this.renderCircles();
+	},
+	newFormation: function(){
+		// first show the last formation
+		this.f_id = this.formations.length - 1;
+		this.showFormation(this.f_id);
+
+	 	this.addNewFormation();
 		this.f_id += 1;
-		this.circles = this.formations[this.f_id];
-		this.renderCircles();
+		this.showFormation(this.f_id);
 	},
 	showFormation: function(index){
 		if(index >= this.formations.length || index < 0) {
@@ -98,6 +112,11 @@ window.dance = {
 		} else {
 			console.log("showing formation " + index);
 			this.f_id = index;
+
+			var children = $('.thumbnail_container').children('.thumb');
+			children.removeClass('selected_thumb');
+			children.eq(this.f_id).addClass('selected_thumb');
+
 			this.circles = this.formations[this.f_id];
 			this.renderCircles();
 		}

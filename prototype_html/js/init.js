@@ -17,20 +17,32 @@ $(document).ready(function(){
 		$('#formation_number').html(dance.f_id + 1)
 	});
 	$('#next').on('click', function(){
-		dance.nextFormation();
+		dance.newFormation();
+
+		//dance.nextFormation();
 		dance.deselectAll();
 		$('#previous').removeClass('disabled');
-		if(dance.atEnd()) {
-			$('#next').before("<img class='thumb' src='http://placehold.it/115x82'/>");
-		}
-		$('#formation_number').html(dance.f_id + 1)
+		
+		$('#next').before("<img class='thumb' src='http://placehold.it/115x82'/>");
+		var children = $('.thumbnail_container').children('.thumb');
+		children.removeClass('selected_thumb');
+		$('#next').prev().addClass('selected_thumb');
+		
+		$('#formation_number').html(dance.formations.length - 1);
 	});
 	$('svg').hammer().on('swipeleft', function(){
 		dance.nextFormation();
 		dance.deselectAll();
 		$('#previous').removeClass('disabled');
-		if(dance.atEnd()) $('#next').removeClass('btn-primary').addClass('btn-success')
+		if(dance.atEnd()) {
+			$('#next').removeClass('btn-primary').addClass('btn-success')
 			.find('i').removeClass('icon-forward').addClass('icon-plus');
+			$('#next').before("<img class='thumb' src='http://placehold.it/115x82'/>");
+
+			var children = $('.thumbnail_container').children('.thumb');
+			children.removeClass('selected_thumb');
+			$('#next').prev().addClass('selected_thumb');
+		}
 		$('#formation_number').html(dance.f_id + 1)
 	});
 	$('svg').hammer().on('swiperight', function(){
