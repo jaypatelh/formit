@@ -32,10 +32,6 @@ $(document).ready(function(){
 		if(dance.atEnd()) $('#next').removeClass('btn-primary').addClass('btn-success')
 			.find('i').removeClass('icon-forward').addClass('icon-plus');
 		$('#formation_number').html(dance.f_id + 1)
-/*		if(dance.atEnd()) {
-			$('#next').before("<img class='thumb' src='http://placehold.it/115x82'/>");
-		}
-		$('#formation_number').html(dance.f_id + 1);*/
 	});
 	$('svg').hammer().on('swiperight', function(){
 		dance.previousFormation();
@@ -45,7 +41,7 @@ $(document).ready(function(){
 			.find('i').removeClass('icon-plus').addClass('icon-forward');
 		$('#formation_number').html(dance.f_id + 1)
 	});
-	$('.thumb').on('click', function(){
+	$('.timeline').on('click', '.thumb', function(){
 		var curr_thumb = $(this);
 		var index = curr_thumb.parent().children('.thumb').index(curr_thumb);
 		dance.showFormation(index);

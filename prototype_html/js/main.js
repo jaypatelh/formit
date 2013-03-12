@@ -105,7 +105,6 @@ window.dance = {
 	addNewFormation: function(){
 		var newFormation = _.map(this.circles, function(d){ var o = new Object(); return _.extend(o, d);})
 		this.formations.push(newFormation);
-		$("#next").before("<img class='thumb' src='http://placehold.it/115x82'/>");
 	},
 	renderCircles: function(){
 		var drag = d3.behavior.drag()
