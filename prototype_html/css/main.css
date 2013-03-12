@@ -1,6 +1,6 @@
 svg{
-	background-color: #EEEEEE;
 	margin: 20px 20px 0;
+	background-image: url('../img/stage.jpg');
 }
 
 #previous{
@@ -30,7 +30,7 @@ svg{
 	width:1000px;
 }
 .thumb{
-	margin:5px 0;
+	margin:5px 2px;
 }
 
 body{
