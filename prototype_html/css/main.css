@@ -26,8 +26,8 @@ svg{
 	width:770px;
 	height:100px;
 	position: fixed;
-	bottom:10px;
-	/*left:200px;*/
+	bottom:0px;
+	left:300px;
 	overflow-x:scroll;
 	overflow-y:hidden;
 }
