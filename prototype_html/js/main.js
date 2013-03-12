@@ -87,15 +87,20 @@ window.dance = {
 		//this.circles = this.formations[this.f_id];
 		//this.renderCircles();
 	},
+	// returns true is next formation already exists, and false if new one was created
 	nextFormation: function(){
 		if(this.f_id === this.formations.length - 1){
+			// create new formation at end
+			console.log("no here");
 			this.newFormation();
+			return false;
 		} else {
+			// go to next formation that already exists
+			console.log("here");
 			this.f_id += 1;
 			this.showFormation(this.f_id);
+			return true;
 		}
-		//this.circles = this.formations[this.f_id];
-		//this.renderCircles();
 	},
 	newFormation: function(){
 		// first show the last formation

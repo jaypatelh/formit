@@ -31,18 +31,24 @@ $(document).ready(function(){
 		$('#formation_number').html(dance.formations.length - 1);
 	});
 	$('svg').hammer().on('swipeleft', function(){
-		dance.nextFormation();
+		// go to next formation if it exists, else create new formation
+		var bool = dance.nextFormation();
 		dance.deselectAll();
 		$('#previous').removeClass('disabled');
-		if(dance.atEnd()) {
+
+		// ADD THUMBNAIL TO TIMELINE - only in case nextFormation calls newFormation
+		if(!bool && dance.atEnd()) {
 			$('#next').removeClass('btn-primary').addClass('btn-success')
 			.find('i').removeClass('icon-forward').addClass('icon-plus');
+			// add thumbnail to timeline
 			$('#next').before("<img class='thumb' src='http://placehold.it/115x82'/>");
 
+			// make thumbnail selected
 			var children = $('.thumbnail_container').children('.thumb');
 			children.removeClass('selected_thumb');
 			$('#next').prev().addClass('selected_thumb');
 		}
+
 		$('#formation_number').html(dance.f_id + 1)
 	});
 	$('svg').hammer().on('swiperight', function(){
@@ -56,6 +62,7 @@ $(document).ready(function(){
 	$('.timeline').on('click', '.thumb', function(){
 		var curr_thumb = $(this);
 		var index = curr_thumb.parent().children('.thumb').index(curr_thumb);
+		console.log("showing index " + index);
 		dance.showFormation(index);
 	});
 });
