@@ -80,26 +80,33 @@ window.dance = {
 	atBeginning: function(){
 		return this.f_id === 0;
 	},
-
 	previousFormation: function(){
 		if(this.f_id === 0) console.log("reached end");
 		else this.f_id -= 1;
 		this.circles = this.formations[this.f_id];
 		this.renderCircles();
 	},
-
 	nextFormation: function(){
 		if(this.f_id === this.formations.length - 1) this.addNewFormation();
 		this.f_id += 1;
 		this.circles = this.formations[this.f_id];
 		this.renderCircles();
 	},
-
+	showFormation: function(index){
+		if(index >= this.formations.length || index < 0) {
+			console.log("invalid formation id");
+		} else {
+			console.log("showing formation " + index);
+			this.f_id = index;
+			this.circles = this.formations[this.f_id];
+			this.renderCircles();
+		}
+	},
 	addNewFormation: function(){
 		var newFormation = _.map(this.circles, function(d){ var o = new Object(); return _.extend(o, d);})
 		this.formations.push(newFormation);
+		$("#next").before("<img class='thumb' src='http://placehold.it/115x82'/>");
 	},
-
 	renderCircles: function(){
 		var drag = d3.behavior.drag()
 								.on('drag', this.circledragmove)
@@ -133,6 +140,7 @@ window.dance = {
 	},
 
 	deselectAll: function(){
+		console.log("deselecting all!");
 		_.each(this.circles, function(d){ d.class = 'dancer';});
 		this.renderCircles();
 	},
@@ -152,6 +160,7 @@ window.dance = {
 	},
 
 	circledragend: function(d){
+		console.log("end");
 		d.r = NORMAL_RADIUS
 		d.x = Math.round(d.x / LINES_VERT_DIST_APART) * LINES_VERT_DIST_APART;
 		d.y = Math.round(d.y / LINES_HORIZ_DIST_APART) * LINES_HORIZ_DIST_APART;

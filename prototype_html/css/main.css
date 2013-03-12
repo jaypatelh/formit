@@ -9,6 +9,11 @@ svg{
 	right: 120px;
 }
 
+#next{
+	width:115px;
+	height:82px;
+}
+
 #formation_number{
 	font-size:25px;
 	position: fixed;
@@ -18,11 +23,11 @@ svg{
 }
 
 .timeline{
-	width:825px;
+	width:770px;
 	height:100px;
 	position: fixed;
 	bottom:10px;
-	left:200px;
+	/*left:200px;*/
 	overflow-x:scroll;
 	overflow-y:hidden;
 }
