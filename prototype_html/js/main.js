@@ -2,6 +2,8 @@ NORMAL_RADIUS = 30;
 DRAGGING_RADIUS = 50;
 LINES_VERT_DIST_APART = 55;
 LINES_HORIZ_DIST_APART = 55;
+SVG_WIDTH = 770;
+SVG_HEIGHT = 550;
 
 colors = d3.scale.category10();
 window.dance = {
@@ -15,7 +17,7 @@ window.dance = {
 	bold_opacity: "1.0",
 	bold_width: "2",
 
-	svg: d3.select('#main').insert("svg:svg").attr('height', 550).attr('width', 770),
+	svg: d3.select('#main').insert("svg:svg").attr('height', SVG_HEIGHT).attr('width', SVG_WIDTH),
 	
 	init: function(){
 		var obj = this;
