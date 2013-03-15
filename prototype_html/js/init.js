@@ -8,17 +8,8 @@ $(document).ready(function(){
 	$('#delete').on('click', function(){
 		dance.removeSelected();
 	});
-	$('#previous').on('click', function(){
-		dance.previousFormation();
-		dance.deselectAll();
-		if(dance.atBeginning()) $(this).addClass('disabled');
-		$('#next').addClass('btn-primary').removeClass('btn-success')
-			.find('i').removeClass('icon-plus').addClass('icon-forward');
-		$('#formation_number').html(dance.f_id + 1)
-	});
-	$('#next').on('click', function(){
+	$('#next').hammer().on('tap', function(){
 		dance.newFormation();
-
 		//dance.nextFormation();
 		dance.deselectAll();
 		$('#previous').removeClass('disabled');
@@ -59,7 +50,7 @@ $(document).ready(function(){
 			.find('i').removeClass('icon-plus').addClass('icon-forward');
 		$('#formation_number').html(dance.f_id + 1)
 	});
-	$('.timeline').on('click', '.thumb', function(){
+	$('.timeline').hammer().on('tap', '.thumb', function(){
 		var curr_thumb = $(this);
 		var index = curr_thumb.parent().children('.thumb').index(curr_thumb);
 		console.log("showing index " + index);
