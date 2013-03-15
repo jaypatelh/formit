@@ -33,8 +33,7 @@ $(document).ready(function(){
 			children.removeClass('selected_thumb');
 			$('#next').prev().addClass('selected_thumb');
 		}
-
-		$('#formation_number').html(dance.f_id + 1)
+		$('#formation_number').html(dance.f_id + 1);
 	});
 	$('svg').hammer().on('swiperight', function(){
 		dance.previousFormation();
