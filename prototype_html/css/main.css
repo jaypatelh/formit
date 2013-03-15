@@ -27,7 +27,7 @@ svg{
 	height:100px;
 	position: fixed;
 	bottom:0px;
-	left:300px;
+	left:220px;
 	overflow-x:scroll;
 	overflow-y:hidden;
 }
@@ -78,5 +78,5 @@ text{
 }
 
 .dancer_name_input{
-	width:244px;
+	width:170px;
 }
