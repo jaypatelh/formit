@@ -174,13 +174,34 @@ window.dance = {
 		dancer.class = 'selected_dancer';
 	},
 	circledragstart: function(d){
-		d.r = DRAGGING_RADIUS
+		// set the currently selected dot's class and r
+		d.class = 'selected_dancer';
+		d.r = DRAGGING_RADIUS;
+
+		// go through all selected dancers and set their radius
+		for(var i = 0; i < dance.circles.length; i++){
+			if(dance.circles[i].class === 'selected_dancer'){
+				console.log("found selected dancer");
+				dance.circles[i].r = DRAGGING_RADIUS;
+			}
+		}
+
+		// render it
+		d3.selectAll('g').select('circle')
+			.transition()
+			.duration(400)
+			.attr('class', function(d){ return d.class; })
+			.attr('r', function(d){ return d.r; });
+
+		/*var d = this.circles[i];
+		d.r = DRAGGING_RADIUS;
 		d.class = 'selected_dancer';
 		d3.select(this).select('circle')
 			.transition()
 			.duration(400)
 			.attr('class', function(d){ return d.class})
 			.attr('r', function(d){ return d.r});
+			*/
 		d3.event.sourceEvent.stopPropagation();
 	},
 
@@ -202,9 +223,21 @@ window.dance = {
 
 	circledragmove: function(d) {
 		console.log("move");
-		d.x = d3.event.x
-		d.y = d3.event.y
-	  d3.select(this)
+		var newX = d3.event.x;
+		var newY = d3.event.y;
+		var deltaX = newX - d.x;
+		var deltaY = newY - d.y;
+
+		// go through all selected circles
+		for(var i=0;i<dance.circles.length;i++){
+			var dancer = dance.circles[i];
+			if(dancer.class === 'selected_dancer'){
+				dancer.x += deltaX;
+				dancer.y += deltaY;
+			}
+		}
+
+	  d3.selectAll('g')
 	  	.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'});
 	},
 
