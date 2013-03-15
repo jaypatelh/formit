@@ -163,7 +163,10 @@ window.dance = {
 				.style('opacity', 0)
 				.remove();
 	},
-
+	renderThumb: function(index, circles){
+		d3.select($('.thumb')[index]).data(circles)
+		
+	},
 	deselectAll: function(){
 		console.log("deselecting all!");
 		_.each(this.circles, function(d){ d.class = 'dancer';});
