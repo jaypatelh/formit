@@ -88,8 +88,6 @@ window.dance = {
 		if(this.f_id === 0) console.log("reached end");
 		else this.f_id -= 1;
 		this.showFormation(this.f_id);
-		//this.circles = this.formations[this.f_id];
-		//this.renderCircles();
 	},
 	// returns true is next formation already exists, and false if new one was created
 	nextFormation: function(){
@@ -114,6 +112,7 @@ window.dance = {
 	 	this.addNewFormation();
 		this.f_id += 1;
 		this.showFormation(this.f_id);
+		this.renderThumb(this.f_id, this.circles);
 	},
 	showFormation: function(index){
 		if(index >= this.formations.length || index < 0) {
@@ -166,15 +165,16 @@ window.dance = {
 				.remove();
 	},
 	renderThumb: function(index, circles){
-		console.log($('.thumb')[index]);
-		var groups = d3.select($('.thumb')[index]).selectAll('svg').selectAll('g')
-			.data(circles,function(d){ return d.d_id})
+		var groups = d3.select($('.thumb')[index]).selectAll('svg').selectAll('g');
+		groups.data(circles,function(d){ return d.d_id})
 			.enter().append('svg:g')
-				.attr('transform', function(d){ return 'translate(' + [d.x * THUMB_WIDTH/SVG_WIDTH ,d.y * THUMB_HEIGHT/SVG_HEIGHT]+ ')'})
-					.append('svg:circle')
+					.append('svg:circle');
+		d3.select($('.thumb')[index]).selectAll('svg').selectAll('g')
+			.attr('transform', function(d){ return 'translate(' + [d.x * THUMB_WIDTH/SVG_WIDTH ,d.y * THUMB_HEIGHT/SVG_HEIGHT]+ ')'})
+			.select('circle')
 					.attr('r', function(d){ return d.r * THUMB_WIDTH/SVG_WIDTH})
-					.style('fill', function(d){ return d.fillColor})
-		console.log(groups);
+					.style('fill', function(d){ return d.fillColor});
+		console.log('thumb rendered');
 	},
 	deselectAll: function(){
 		console.log("deselecting all!");
@@ -199,7 +199,7 @@ window.dance = {
 		}
 
 		// render it
-		d3.selectAll('g').select('circle')
+		dance.svg.selectAll('g').select('circle')
 			.transition()
 			.duration(400)
 			.attr('class', function(d){ return d.class; })
@@ -231,6 +231,7 @@ window.dance = {
 				.attr('r', function(d){ return d.r })
 				.each('end', function(){ this.dragging = false;});
 		d3.event.sourceEvent.stopPropagation();
+		dance.renderThumb(dance.f_id, dance.circles);
 	},
 
 	circledragmove: function(d) {
@@ -249,7 +250,7 @@ window.dance = {
 			}
 		}
 
-	  d3.selectAll('g')
+	  dance.svg.selectAll('g')
 	  	.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'});
 	},
 
@@ -280,6 +281,7 @@ window.dance = {
 		this.svg.selectAll('g').append('svg:text')
 			.text(function(d){ return d.dancer_name})
 			.attr('text-anchor', 'middle');
+		dance.renderThumb(dance.f_id, dance.circles);
 	},
 
 	colorSelected: function(color){
@@ -287,6 +289,7 @@ window.dance = {
 		this.svg.selectAll('circle').data(this.circles)
 			.style('fill', function(d){ console.log(d.fillColor);return d.fillColor});
 		this.deselectAll();
+		dance.renderThumb(dance.f_id, dance.circles);
 	},
 	removeSelected: function(){
 		this.circles = this.circles.filter(function(e){ return e.class != 'selected_dancer'});
