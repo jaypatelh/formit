@@ -4,6 +4,8 @@ LINES_VERT_DIST_APART = 55;
 LINES_HORIZ_DIST_APART = 55;
 SVG_WIDTH = 770;
 SVG_HEIGHT = 550;
+THUMB_WIDTH = 117;
+THUMB_HEIGHT = 84;
 
 colors = d3.scale.category10();
 window.dance = {
@@ -164,8 +166,15 @@ window.dance = {
 				.remove();
 	},
 	renderThumb: function(index, circles){
-		d3.select($('.thumb')[index]).select('svg').selectAll('g').data(circles)
-		
+		console.log($('.thumb')[index]);
+		var groups = d3.select($('.thumb')[index]).selectAll('svg').selectAll('g')
+			.data(circles,function(d){ return d.d_id})
+			.enter().append('svg:g')
+				.attr('transform', function(d){ return 'translate(' + [d.x * THUMB_WIDTH/SVG_WIDTH ,d.y * THUMB_HEIGHT/SVG_HEIGHT]+ ')'})
+					.append('svg:circle')
+					.attr('r', function(d){ return d.r * THUMB_WIDTH/SVG_WIDTH})
+					.style('fill', function(d){ return d.fillColor})
+		console.log(groups);
 	},
 	deselectAll: function(){
 		console.log("deselecting all!");
