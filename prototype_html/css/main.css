@@ -1,6 +1,9 @@
-svg{
+.stage{
 	margin: 20px 20px 0;
 	background-image: url('../img/stage.jpg');
+	-webkit-border-radius: 0 0 6px 6px;
+	-moz-border-radius: 0 0 6px 6px;
+	border-radius: 0 0 6px 6px;
 }
 
 #previous{
@@ -36,6 +39,9 @@ svg{
 }
 .thumb{
 	margin:5px 2px;
+	width:115px;
+	height:72px;
+	float:left;
 }
 .selected_thumb{
 	border-style:solid;

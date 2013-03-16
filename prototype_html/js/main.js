@@ -17,7 +17,7 @@ window.dance = {
 	bold_opacity: "1.0",
 	bold_width: "2",
 
-	svg: d3.select('#main').insert("svg:svg").attr('height', SVG_HEIGHT).attr('width', SVG_WIDTH),
+	svg: d3.select('#main').insert("svg:svg").attr('height', SVG_HEIGHT).attr('width', SVG_WIDTH).attr('class', 'stage'),
 	
 	init: function(){
 		var obj = this;
@@ -164,7 +164,7 @@ window.dance = {
 				.remove();
 	},
 	renderThumb: function(index, circles){
-		d3.select($('.thumb')[index]).data(circles)
+		d3.select($('.thumb')[index]).select('svg').selectAll('g').data(circles)
 		
 	},
 	deselectAll: function(){
