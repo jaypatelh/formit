@@ -8,10 +8,10 @@ $(document).ready(function(){
 		dance.removeSelected();
 	});
 	$('#next').hammer().on('tap', function(){
+		$('#next').before("<div class='thumb'><svg></svg></div>");
 		dance.newFormation();
 		//dance.nextFormation();
 		dance.deselectAll();
-		$('#next').before("<div class='thumb'><svg></svg></div>");
 		var children = $('.thumbnail_container').children('.thumb');
 		children.attr('class','thumb');
 		$('#next').prev().attr('class','thumb selected_thumb');

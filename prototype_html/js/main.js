@@ -112,7 +112,9 @@ window.dance = {
 	 	this.addNewFormation();
 		this.f_id += 1;
 		this.showFormation(this.f_id);
-		this.renderThumb(this.f_id, this.circles);
+		console.log(this.f_id);
+		console.log(this.formations[this.f_id]);
+		this.renderThumb(this.f_id, this.formations[this.f_id]);
 	},
 	showFormation: function(index){
 		if(index >= this.formations.length || index < 0) {
