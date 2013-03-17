@@ -156,7 +156,7 @@ window.dance = {
 					.attr('r', function(d){ return d.r;})
 					.duration(500);
 		new_groups.append('svg:text')
-			.text(function(d){ return d.dancer_name})
+			.text(function(d){ console.log("setting normal radius of circle to " + d.r); return d.dancer_name;})
 			.attr('text-anchor', 'middle');
 		groups.exit()
 			.transition()
@@ -172,7 +172,7 @@ window.dance = {
 		d3.select($('.thumb')[index]).selectAll('svg').selectAll('g')
 			.attr('transform', function(d){ return 'translate(' + [d.x * THUMB_WIDTH/SVG_WIDTH ,d.y * THUMB_HEIGHT/SVG_HEIGHT]+ ')'})
 			.select('circle')
-					.attr('r', function(d){ return d.r * THUMB_WIDTH/SVG_WIDTH})
+					.attr('r', function(d){ return d.r * THUMB_WIDTH/SVG_WIDTH;})
 					.style('fill', function(d){ return d.fillColor});
 		console.log('thumb rendered');
 	},
@@ -205,24 +205,25 @@ window.dance = {
 			.attr('class', function(d){ return d.class; })
 			.attr('r', function(d){ return d.r; });
 
-		/*var d = this.circles[i];
-		d.r = DRAGGING_RADIUS;
-		d.class = 'selected_dancer';
-		d3.select(this).select('circle')
-			.transition()
-			.duration(400)
-			.attr('class', function(d){ return d.class})
-			.attr('r', function(d){ return d.r});
-			*/
 		d3.event.sourceEvent.stopPropagation();
 	},
 
 	circledragend: function(d){
 		console.log("end");
-		d.r = NORMAL_RADIUS
-		d.x = Math.round(d.x / LINES_VERT_DIST_APART) * LINES_VERT_DIST_APART;
-		d.y = Math.round(d.y / LINES_HORIZ_DIST_APART) * LINES_HORIZ_DIST_APART;
-		d3.select(this)
+
+		for(var i = 0; i < dance.circles.length; i++){
+			if(dance.circles[i].class === 'selected_dancer'){
+				console.log("old r: " + dance.circles[i].r);
+				dance.circles[i].r = NORMAL_RADIUS;
+				dance.circles[i].x = Math.round(dance.circles[i].x / LINES_VERT_DIST_APART) * LINES_VERT_DIST_APART;
+				dance.circles[i].y = Math.round(dance.circles[i].y / LINES_HORIZ_DIST_APART) * LINES_HORIZ_DIST_APART;
+				console.log("new r: " + dance.circles[i].r);
+			}
+		}
+
+		// using 'dance.svg' here is important because it only retrieves the groups in the main canvas
+		// d3.selectAll('g') instead (as was before) selects all the groups, including those in the thumbnails, and sets their radii to be the same
+		dance.svg.selectAll('g')
 			.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'})
 				.select('circle')
 				.transition()
@@ -230,7 +231,9 @@ window.dance = {
 				.attr('class', function(d){ return d.class})
 				.attr('r', function(d){ return d.r })
 				.each('end', function(){ this.dragging = false;});
+		
 		d3.event.sourceEvent.stopPropagation();
+		
 		dance.renderThumb(dance.f_id, dance.circles);
 	},
 
