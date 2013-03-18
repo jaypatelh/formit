@@ -22,7 +22,7 @@ $(document).ready(function(){
 		console.log(e)
 	})
 	$('.stage').hammer().on('swipeleft', function(e){
-		if(e.gesture.touches.length > 1){
+		if(e.gesture.touches.length > 0){
 			// go to next formation if it exists, else create new formation
 			var bool = dance.nextFormation();
 			dance.deselectAll();
@@ -40,7 +40,7 @@ $(document).ready(function(){
 	});
 
 	$('.stage').hammer().on('swiperight', function(e){
-		if(e.gesture.touches.length > 1){
+		if(e.gesture.touches.length > 0){
 			dance.previousFormation();
 			dance.deselectAll();
 			$('#formation_number').html(dance.f_id + 1);
