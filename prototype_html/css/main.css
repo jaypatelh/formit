@@ -29,6 +29,7 @@
 .timeline{
 	width:750px;
 	height:100px;
+	margin:20px;
 	overflow-x:scroll;
 	overflow-y:hidden;
 }
