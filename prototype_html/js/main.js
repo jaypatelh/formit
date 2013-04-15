@@ -23,11 +23,11 @@ window.dance = {
 	
 	init: function(){
 		var obj = this;
-		// this.svg.on('mouseup', function(){
-		// 	obj.deselectAll();
-		// 	obj.renderCircles();
-		// });
 		this.svg.on('touchstart', function(e){
+			obj.deselectAll();
+			obj.renderCircles();	
+		});
+		this.svg.on('click', function(e){
 			obj.deselectAll();
 			obj.renderCircles();	
 		});
@@ -191,16 +191,6 @@ window.dance = {
 		// set the currently selected dot's class and r
 		d.class = 'selected_dancer';
 		d.r = DRAGGING_RADIUS;
-
-		// go through all selected dancers and set their radius
-		// for(var i = 0; i < dance.circles.length; i++){
-		// 	if(dance.circles[i].class === 'selected_dancer'){
-		// 		console.log("found selected dancer");
-		// 		dance.circles[i].r = DRAGGING_RADIUS;
-		// 	}
-		// }
-
-		// render it
 		dance.svg.selectAll('g').select('circle')
 			.transition()
 			.duration(400)
@@ -211,20 +201,9 @@ window.dance = {
 	},
 
 	circledragend: function(d){
-		console.log("end");
 		d.r = NORMAL_RADIUS
 		d.x = Math.round(d.x / LINES_VERT_DIST_APART) * LINES_VERT_DIST_APART;
 		d.y = Math.round(d.y / LINES_HORIZ_DIST_APART) * LINES_HORIZ_DIST_APART;
-		// for(var i = 0; i < dance.circles.length; i++){
-		// 	if(dance.circles[i].class === 'selected_dancer'){
-		// 		console.log("old r: " + dance.circles[i].r);
-		// 		dance.circles[i].r = NORMAL_RADIUS;
-		// 		dance.circles[i].x = Math.round(dance.circles[i].x / LINES_VERT_DIST_APART) * LINES_VERT_DIST_APART;
-		// 		dance.circles[i].y = Math.round(dance.circles[i].y / LINES_HORIZ_DIST_APART) * LINES_HORIZ_DIST_APART;
-		// 		console.log("new r: " + dance.circles[i].r);
-		// 	}
-		// }
-
 		// using 'dance.svg' here is important because it only retrieves the groups in the main canvas
 		// d3.selectAll('g') instead (as was before) selects all the groups, including those in the thumbnails, and sets their radii to be the same
 		dance.svg.selectAll('g')
@@ -235,9 +214,7 @@ window.dance = {
 				.attr('class', function(d){ return d.class})
 				.attr('r', function(d){ return d.r })
 				.each('end', function(){ this.dragging = false;});
-		
-		d3.event.sourceEvent.stopPropagation();
-		
+		d3.event.sourceEvent.stopPropagation();	
 		dance.renderThumb(dance.f_id, dance.circles);
 	},
 
@@ -249,15 +226,6 @@ window.dance = {
 		var deltaY = newY - d.y;
 		d.x = newX;
 		d.y = newY;
-		// go through all selected circles
-		// for(var i=0;i<dance.circles.length;i++){
-		// 	var dancer = dance.circles[i];
-		// 	if(dancer.class === 'selected_dancer'){
-		// 		dancer.x += deltaX;
-		// 		dancer.y += deltaY;
-		// 	}
-		// }
-
 	  dance.svg.selectAll('g')
 	  	.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'});
 	},
