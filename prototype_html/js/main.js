@@ -195,7 +195,6 @@ window.dance = {
 			.duration(400)
 			.attr('class', function(d){ return d.class; })
 			.attr('r', function(d){ return d.r; });
-
 		d3.event.sourceEvent.stopPropagation();
 	},
 
@@ -227,6 +226,7 @@ window.dance = {
 		d.y = newY;
 	  dance.svg.selectAll('g')
 	  	.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'});
+	  d3.event.sourceEvent.stopPropagation();
 	},
 
 	nameSelected: function(name){
@@ -246,6 +246,9 @@ window.dance = {
 					d.class = 'selected_dancer'
 					d3.select(this).select('circle').attr('class', function(d){ return d.class});
 					})
+				.on('click', function(e){
+					d3.event.stopPropagation();
+				})
 				.append('svg:circle')
 					.attr('r', 1)
 					.attr('class', function(d){ return d.class })

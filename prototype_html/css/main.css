@@ -67,15 +67,15 @@ circle{
 }
 
 .dancer{
-	stroke: #aaaaaa;
-	stroke-width: 5px;
 	fill: white;
+	cursor:pointer;
 }
 
 .selected_dancer{
 	stroke: black;
 	stroke-width: 5px;
 	fill: #ffbb78;
+	cursor:pointer;
 }
 
 .header{
