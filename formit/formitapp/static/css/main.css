@@ -27,11 +27,8 @@
 }
 
 .timeline{
-	width:770px;
+	width:750px;
 	height:100px;
-	position: fixed;
-	bottom:50px;
-	left:220px;
 	overflow-x:scroll;
 	overflow-y:hidden;
 }
@@ -70,15 +67,15 @@ circle{
 }
 
 .dancer{
-	stroke: #aaaaaa;
-	stroke-width: 5px;
 	fill: white;
+	cursor:pointer;
 }
 
 .selected_dancer{
 	stroke: black;
 	stroke-width: 5px;
 	fill: #ffbb78;
+	cursor:pointer;
 }
 
 .header{
@@ -95,5 +92,5 @@ text{
 }
 
 .dancer_name_input{
-	width:170px;
+	width:93%;
 }

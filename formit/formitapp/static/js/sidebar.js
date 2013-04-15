@@ -4,7 +4,11 @@ window.sidebar = {
 		$(".add_dancer").click(function(){
 			$(".dancer_names").append("<li><input type='text' class='dancer_name_input'></input></li>");
 
-			$(".dancer_name_input").focus();
+			$(".dancer_name_input").focus().blur(function(e){
+				if($(this).val() == ''){
+					$(this).parent().remove();
+				}
+			});
 			
 			$(".dancer_name_input").keydown(function(e){
 				var code = e.keyCode ? e.keyCode : e.which;
