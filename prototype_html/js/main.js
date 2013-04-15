@@ -19,15 +19,15 @@ window.dance = {
 	bold_opacity: "1.0",
 	bold_width: "2",
 
-	svg: d3.select('#main').insert("svg:svg").attr('height', SVG_HEIGHT).attr('width', SVG_WIDTH).attr('class', 'stage'),
+	svg: d3.select('#canvas').attr('height', SVG_HEIGHT).attr('width', SVG_WIDTH).attr('class', 'stage'),
 	
 	init: function(){
 		var obj = this;
-		// this.svg.on('mouseup', function(){
-		// 	obj.deselectAll();
-		// 	obj.renderCircles();
-		// });
 		this.svg.on('touchstart', function(e){
+			obj.deselectAll();
+			obj.renderCircles();	
+		});
+		this.svg.on('click', function(e){
 			obj.deselectAll();
 			obj.renderCircles();	
 		});
@@ -52,13 +52,13 @@ window.dance = {
 		var middle_line_index = Math.round(num_vert_lines / 2);
     for(var i=0;i<num_vert_lines;i++){
     	this.svg.append("svg:line")
-    .attr("x1", LINES_VERT_DIST_APART*i)
-    .attr("y1", 0)
-    .attr("x2", LINES_VERT_DIST_APART*i)
-    .attr("y2", this.svg.attr('height'))
-    .style("stroke", "rgb(6,120,155)")
-    .style("stroke-opacity", (i == middle_line_index) ? this.bold_opacity : this.normal_opacity)
-    .style("stroke-width", (i == middle_line_index) ? this.bold_width : this.normal_width);
+		    .attr("x1", LINES_VERT_DIST_APART*i)
+		    .attr("y1", 0)
+		    .attr("x2", LINES_VERT_DIST_APART*i)
+		    .attr("y2", this.svg.attr('height'))
+		    .style("stroke", "rgb(6,120,155)")
+		    .style("stroke-opacity", (i == middle_line_index) ? this.bold_opacity : this.normal_opacity)
+		    .style("stroke-width", (i == middle_line_index) ? this.bold_width : this.normal_width);
     }
 	},
 
@@ -67,13 +67,13 @@ window.dance = {
 		var middle_line_index = num_horiz_lines / 2;
     for(var i=0;i<num_horiz_lines;i++){
     	this.svg.append("svg:line")
-    .attr("x1", 0)
-    .attr("y1", LINES_HORIZ_DIST_APART*i)
-    .attr("x2", this.svg.attr('width'))
-    .attr("y2", LINES_HORIZ_DIST_APART*i)
-    .style("stroke", "rgb(6,120,155)")
-    .style("stroke-opacity", (i == middle_line_index) ? this.bold_opacity : this.normal_opacity)
-    .style("stroke-width", (i == middle_line_index) ? this.bold_width : this.normal_width);
+			  .attr("x1", 0)
+			  .attr("y1", LINES_HORIZ_DIST_APART*i)
+			  .attr("x2", this.svg.attr('width'))
+			  .attr("y2", LINES_HORIZ_DIST_APART*i)
+			  .style("stroke", "rgb(6,120,155)")
+			  .style("stroke-opacity", (i == middle_line_index) ? this.bold_opacity : this.normal_opacity)
+			  .style("stroke-width", (i == middle_line_index) ? this.bold_width : this.normal_width);
     }
 	},
 
@@ -176,7 +176,6 @@ window.dance = {
 			.select('circle')
 					.attr('r', function(d){ return d.r * THUMB_WIDTH/SVG_WIDTH;})
 					.style('fill', function(d){ return d.fillColor});
-		console.log('thumb rendered');
 	},
 	deselectAll: function(){
 		console.log("deselecting all!");
@@ -191,40 +190,18 @@ window.dance = {
 		// set the currently selected dot's class and r
 		d.class = 'selected_dancer';
 		d.r = DRAGGING_RADIUS;
-
-		// go through all selected dancers and set their radius
-		// for(var i = 0; i < dance.circles.length; i++){
-		// 	if(dance.circles[i].class === 'selected_dancer'){
-		// 		console.log("found selected dancer");
-		// 		dance.circles[i].r = DRAGGING_RADIUS;
-		// 	}
-		// }
-
-		// render it
 		dance.svg.selectAll('g').select('circle')
 			.transition()
 			.duration(400)
 			.attr('class', function(d){ return d.class; })
 			.attr('r', function(d){ return d.r; });
-
 		d3.event.sourceEvent.stopPropagation();
 	},
 
 	circledragend: function(d){
-		console.log("end");
 		d.r = NORMAL_RADIUS
 		d.x = Math.round(d.x / LINES_VERT_DIST_APART) * LINES_VERT_DIST_APART;
 		d.y = Math.round(d.y / LINES_HORIZ_DIST_APART) * LINES_HORIZ_DIST_APART;
-		// for(var i = 0; i < dance.circles.length; i++){
-		// 	if(dance.circles[i].class === 'selected_dancer'){
-		// 		console.log("old r: " + dance.circles[i].r);
-		// 		dance.circles[i].r = NORMAL_RADIUS;
-		// 		dance.circles[i].x = Math.round(dance.circles[i].x / LINES_VERT_DIST_APART) * LINES_VERT_DIST_APART;
-		// 		dance.circles[i].y = Math.round(dance.circles[i].y / LINES_HORIZ_DIST_APART) * LINES_HORIZ_DIST_APART;
-		// 		console.log("new r: " + dance.circles[i].r);
-		// 	}
-		// }
-
 		// using 'dance.svg' here is important because it only retrieves the groups in the main canvas
 		// d3.selectAll('g') instead (as was before) selects all the groups, including those in the thumbnails, and sets their radii to be the same
 		dance.svg.selectAll('g')
@@ -235,9 +212,7 @@ window.dance = {
 				.attr('class', function(d){ return d.class})
 				.attr('r', function(d){ return d.r })
 				.each('end', function(){ this.dragging = false;});
-		
-		d3.event.sourceEvent.stopPropagation();
-		
+		d3.event.sourceEvent.stopPropagation();	
 		dance.renderThumb(dance.f_id, dance.circles);
 	},
 
@@ -249,17 +224,9 @@ window.dance = {
 		var deltaY = newY - d.y;
 		d.x = newX;
 		d.y = newY;
-		// go through all selected circles
-		// for(var i=0;i<dance.circles.length;i++){
-		// 	var dancer = dance.circles[i];
-		// 	if(dancer.class === 'selected_dancer'){
-		// 		dancer.x += deltaX;
-		// 		dancer.y += deltaY;
-		// 	}
-		// }
-
 	  dance.svg.selectAll('g')
 	  	.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'});
+	  d3.event.sourceEvent.stopPropagation();
 	},
 
 	nameSelected: function(name){
@@ -279,6 +246,9 @@ window.dance = {
 					d.class = 'selected_dancer'
 					d3.select(this).select('circle').attr('class', function(d){ return d.class});
 					})
+				.on('click', function(e){
+					d3.event.stopPropagation();
+				})
 				.append('svg:circle')
 					.attr('r', 1)
 					.attr('class', function(d){ return d.class })
