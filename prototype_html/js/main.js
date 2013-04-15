@@ -19,7 +19,7 @@ window.dance = {
 	bold_opacity: "1.0",
 	bold_width: "2",
 
-	svg: d3.select('#main').insert("svg:svg").attr('height', SVG_HEIGHT).attr('width', SVG_WIDTH).attr('class', 'stage'),
+	svg: d3.select('#canvas').attr('height', SVG_HEIGHT).attr('width', SVG_WIDTH).attr('class', 'stage'),
 	
 	init: function(){
 		var obj = this;
@@ -52,13 +52,13 @@ window.dance = {
 		var middle_line_index = Math.round(num_vert_lines / 2);
     for(var i=0;i<num_vert_lines;i++){
     	this.svg.append("svg:line")
-    .attr("x1", LINES_VERT_DIST_APART*i)
-    .attr("y1", 0)
-    .attr("x2", LINES_VERT_DIST_APART*i)
-    .attr("y2", this.svg.attr('height'))
-    .style("stroke", "rgb(6,120,155)")
-    .style("stroke-opacity", (i == middle_line_index) ? this.bold_opacity : this.normal_opacity)
-    .style("stroke-width", (i == middle_line_index) ? this.bold_width : this.normal_width);
+		    .attr("x1", LINES_VERT_DIST_APART*i)
+		    .attr("y1", 0)
+		    .attr("x2", LINES_VERT_DIST_APART*i)
+		    .attr("y2", this.svg.attr('height'))
+		    .style("stroke", "rgb(6,120,155)")
+		    .style("stroke-opacity", (i == middle_line_index) ? this.bold_opacity : this.normal_opacity)
+		    .style("stroke-width", (i == middle_line_index) ? this.bold_width : this.normal_width);
     }
 	},
 
@@ -67,13 +67,13 @@ window.dance = {
 		var middle_line_index = num_horiz_lines / 2;
     for(var i=0;i<num_horiz_lines;i++){
     	this.svg.append("svg:line")
-    .attr("x1", 0)
-    .attr("y1", LINES_HORIZ_DIST_APART*i)
-    .attr("x2", this.svg.attr('width'))
-    .attr("y2", LINES_HORIZ_DIST_APART*i)
-    .style("stroke", "rgb(6,120,155)")
-    .style("stroke-opacity", (i == middle_line_index) ? this.bold_opacity : this.normal_opacity)
-    .style("stroke-width", (i == middle_line_index) ? this.bold_width : this.normal_width);
+			  .attr("x1", 0)
+			  .attr("y1", LINES_HORIZ_DIST_APART*i)
+			  .attr("x2", this.svg.attr('width'))
+			  .attr("y2", LINES_HORIZ_DIST_APART*i)
+			  .style("stroke", "rgb(6,120,155)")
+			  .style("stroke-opacity", (i == middle_line_index) ? this.bold_opacity : this.normal_opacity)
+			  .style("stroke-width", (i == middle_line_index) ? this.bold_width : this.normal_width);
     }
 	},
 
@@ -176,7 +176,6 @@ window.dance = {
 			.select('circle')
 					.attr('r', function(d){ return d.r * THUMB_WIDTH/SVG_WIDTH;})
 					.style('fill', function(d){ return d.fillColor});
-		console.log('thumb rendered');
 	},
 	deselectAll: function(){
 		console.log("deselecting all!");
