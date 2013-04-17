@@ -212,13 +212,10 @@ window.dance = {
 			.attr('r', function(d){ return d.r; });
 		d3.event.sourceEvent.stopPropagation();
 	},
-
 	circledragend: function(d){
 		d.r = NORMAL_RADIUS
 		d.x = Math.round(d.x / LINES_VERT_DIST_APART) * LINES_VERT_DIST_APART;
 		d.y = Math.round(d.y / LINES_HORIZ_DIST_APART) * LINES_HORIZ_DIST_APART;
-		// using 'dance.svg' here is important because it only retrieves the groups in the main canvas
-		// d3.selectAll('g') instead (as was before) selects all the groups, including those in the thumbnails, and sets their radii to be the same
 		dance.svg.selectAll('g')
 			.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'})
 				.select('circle')
@@ -230,7 +227,6 @@ window.dance = {
 		d3.event.sourceEvent.stopPropagation();	
 		dance.renderThumb(dance.f_id, dance.circles);
 	},
-
 	circledragmove: function(d) {
 		console.log("move");
 		var newX = d3.event.x;
@@ -243,7 +239,6 @@ window.dance = {
 	  	.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'});
 	  d3.event.sourceEvent.stopPropagation();
 	},
-
 	nameSelected: function(name){
 		var obj = this;
 		var dancer = this.createDancer(this.d_id, 50, 50, name);
@@ -252,7 +247,6 @@ window.dance = {
 		this.renderCircles();
 		dance.renderThumb(dance.f_id, dance.circles);
 	},
-
 	colorSelected: function(color){
 		_.each(this.circles, function(e){ if(e.class === 'selected_dancer') e.fillColor=colors(parseInt(color))});
 		this.svg.selectAll('circle').data(this.circles)
@@ -268,7 +262,6 @@ window.dance = {
 			.style('opacity', 0)
 			.remove();
 	},
-
 	toggleSelected: function(dancer){
 		if(dancer.class === 'dancer') {dancer.class = 'selected_dancer'; console.log("selecting dancer..");}
 		else {dancer.class = 'dancer'; console.log("deselecting dancer...");}
