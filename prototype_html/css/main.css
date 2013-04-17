@@ -16,6 +16,19 @@
 	border-width:5px;
 	border-style:solid;
 	border-color:white;
+	cursor: pointer;
+	-webkit-transition:background-color .25s ease-in;  
+	-moz-transition:background-color .25s ease-in;  
+	-o-transition:background-color .25s ease-in;  
+	transition:background-color .25s ease-in; 
+}
+
+#next:hover{
+	background-color:#5B77CC;
+	-webkit-transition:background-color .25s ease-in;  
+	-moz-transition:background-color .25s ease-in;  
+	-o-transition:background-color .25s ease-in;  
+	transition:background-color .25s ease-in;  
 }
 
 #formation_number{
@@ -24,6 +37,10 @@
 	bottom: 28px;
 	right: 98px;
 	text-align: center;
+}
+
+.color{
+	cursor:pointer;
 }
 
 .timeline{
@@ -45,12 +62,27 @@
 	border-width:5px;
 	border-style:solid;
 	border-color:white;
+	cursor:pointer;
+	-webkit-transition:border-color .25s ease-in;  
+	-moz-transition:border-color .25s ease-in;  
+	-o-transition:border-color .25s ease-in;  
+	transition:border-color .25s ease-in;  
 }
+
+.thumb:hover{
+	border-color:#5B77CC;
+	-webkit-transition:border-color .25s ease-in;  
+	-moz-transition:border-color .25s ease-in;  
+	-o-transition:border-color .25s ease-in;  
+	transition:border-color .25s ease-in;  
+}
+
 .selected_thumb{
 	border-style:solid;
 	border-width:5px;
 	border-color:black;
 }
+
 body{
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -81,6 +113,11 @@ circle{
 
 .header{
 	font-weight:bold;
+	cursor:normal;
+}
+
+.add_dancer{
+	cursor:pointer;
 }
 
 text{

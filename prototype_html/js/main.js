@@ -21,7 +21,7 @@ window.dance = {
 
 	svg: d3.select('#canvas').attr('height', SVG_HEIGHT).attr('width', SVG_WIDTH).attr('class', 'stage'),
 	
-	init: function(){
+	init: function(cache){
 		var obj = this;
 		this.svg.on('touchstart', function(e){
 			obj.deselectAll();
@@ -44,7 +44,19 @@ window.dance = {
 				dance.renderCircles();
 			}
 		});
-		this.formations.push(this.circles);
+		if(cache){
+			this.formations = JSON.parse(cache)
+			this.circles = this.formations[0];
+			this.renderThumb(0,this.circles);
+			for(var i=1; i < this.formations.length; i++){
+				$('#next').before("<div class='thumb'><svg></svg></div>");
+				this.renderThumb(i,this.formations[i]);
+			}
+			this.renderCircles();
+		}
+		else{
+			this.formations.push(this.circles);
+		}
 	},
 
 	addVerticalLines: function(){
@@ -150,6 +162,9 @@ window.dance = {
 		new_groups = groups.enter().append('svg:g');
 		new_groups.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'})
 			.call(drag)
+			.on('click', function(e){
+					d3.event.stopPropagation();
+				})
 				.append('svg:circle')
 				.attr('r', 1)
 				.attr('class', function(d){ return d.class })
@@ -158,7 +173,7 @@ window.dance = {
 					.attr('r', function(d){ return d.r;})
 					.duration(500);
 		new_groups.append('svg:text')
-			.text(function(d){ console.log("setting normal radius of circle to " + d.r); return d.dancer_name;})
+			.text(function(d){ return d.dancer_name;})
 			.attr('text-anchor', 'middle');
 		groups.exit()
 			.transition()
@@ -197,13 +212,10 @@ window.dance = {
 			.attr('r', function(d){ return d.r; });
 		d3.event.sourceEvent.stopPropagation();
 	},
-
 	circledragend: function(d){
 		d.r = NORMAL_RADIUS
 		d.x = Math.round(d.x / LINES_VERT_DIST_APART) * LINES_VERT_DIST_APART;
 		d.y = Math.round(d.y / LINES_HORIZ_DIST_APART) * LINES_HORIZ_DIST_APART;
-		// using 'dance.svg' here is important because it only retrieves the groups in the main canvas
-		// d3.selectAll('g') instead (as was before) selects all the groups, including those in the thumbnails, and sets their radii to be the same
 		dance.svg.selectAll('g')
 			.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'})
 				.select('circle')
@@ -215,7 +227,6 @@ window.dance = {
 		d3.event.sourceEvent.stopPropagation();	
 		dance.renderThumb(dance.f_id, dance.circles);
 	},
-
 	circledragmove: function(d) {
 		console.log("move");
 		var newX = d3.event.x;
@@ -228,40 +239,14 @@ window.dance = {
 	  	.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'});
 	  d3.event.sourceEvent.stopPropagation();
 	},
-
 	nameSelected: function(name){
-		var drag = d3.behavior.drag()
-								.on('drag', this.circledragmove)
-								.on('dragstart', this.circledragstart)
-								.on('dragend', this.circledragend);
 		var obj = this;
 		var dancer = this.createDancer(this.d_id, 50, 50, name);
 		this.d_id++;
 		this.circles.push(dancer);
-		this.svg.selectAll('g').data(this.circles, function(d){ return d.d_id})
-			.enter().append('svg:g')
-				.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'})
-				.call(drag)
-				.on('touchmove', function(d){
-					d.class = 'selected_dancer'
-					d3.select(this).select('circle').attr('class', function(d){ return d.class});
-					})
-				.on('click', function(e){
-					d3.event.stopPropagation();
-				})
-				.append('svg:circle')
-					.attr('r', 1)
-					.attr('class', function(d){ return d.class })
-					.style('fill', function(d){ return d.fillColor})
-					.transition()
-						.attr('r', function(d){ return d.r})
-						.duration(300);
-		this.svg.selectAll('g').append('svg:text')
-			.text(function(d){ return d.dancer_name})
-			.attr('text-anchor', 'middle');
+		this.renderCircles();
 		dance.renderThumb(dance.f_id, dance.circles);
 	},
-
 	colorSelected: function(color){
 		_.each(this.circles, function(e){ if(e.class === 'selected_dancer') e.fillColor=colors(parseInt(color))});
 		this.svg.selectAll('circle').data(this.circles)
@@ -277,7 +262,6 @@ window.dance = {
 			.style('opacity', 0)
 			.remove();
 	},
-
 	toggleSelected: function(dancer){
 		if(dancer.class === 'dancer') {dancer.class = 'selected_dancer'; console.log("selecting dancer..");}
 		else {dancer.class = 'dancer'; console.log("deselecting dancer...");}
@@ -292,6 +276,9 @@ window.dance = {
 		obj.fillColor = 'white';
 		obj.dancer_name = name;
 		return obj;
+	},
+	saveState: function(){
+		sessionStorage.setItem('dance', JSON.stringify(dance.formations));
 	}
 }
 

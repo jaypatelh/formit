@@ -1,12 +1,9 @@
 $(document).ready(function(){
 	sidebar.init();
-	dance.init();
 	dance.addVerticalLines();
 	dance.addHorizontalLines();
+	dance.init(sessionStorage.getItem('dance'));
 
-	$('#delete').on('click', function(){
-		dance.removeSelected();
-	});
 	$('#next').hammer().on('tap', function(){
 		$('#next').before("<div class='thumb'><svg></svg></div>");
 		dance.newFormation();
@@ -17,10 +14,7 @@ $(document).ready(function(){
 		$('#next').prev().attr('class','thumb selected_thumb');
 		$('#formation_number').html(dance.formations.length + 1);
 	});
-	$('.stage').hammer().on('pinch', function(e){
-		console.log("Pinch Detected...")
-		console.log(e)
-	})
+
 	$('.stage').hammer().on('swipeleft', function(e){
 		if(e.gesture.touches.length > 0){
 			// go to next formation if it exists, else create new formation
@@ -46,6 +40,9 @@ $(document).ready(function(){
 			$('#formation_number').html(dance.f_id + 1);
 		}
 	});
+	$('.save').hammer().on('tap click', function(){
+		dance.saveState();
+	})
 	$('.timeline').hammer().on('tap', '.thumb', function(){
 		var curr_thumb = $(this);
 		var index = curr_thumb.parent().children('.thumb').index(curr_thumb);
