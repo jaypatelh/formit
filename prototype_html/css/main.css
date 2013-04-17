@@ -62,6 +62,10 @@
 	border-width:5px;
 	border-style:solid;
 	border-color:white;
+	cursor:pointer;
+}
+.thumb:hover{
+	border-color:#5B77CC;
 }
 .selected_thumb{
 	border-style:solid;
