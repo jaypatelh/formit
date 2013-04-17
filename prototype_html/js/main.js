@@ -162,6 +162,9 @@ window.dance = {
 		new_groups = groups.enter().append('svg:g');
 		new_groups.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'})
 			.call(drag)
+			.on('click', function(e){
+					d3.event.stopPropagation();
+				})
 				.append('svg:circle')
 				.attr('r', 1)
 				.attr('class', function(d){ return d.class })
