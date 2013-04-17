@@ -16,6 +16,19 @@
 	border-width:5px;
 	border-style:solid;
 	border-color:white;
+	cursor: pointer;
+	-webkit-transition:background-color .25s ease-in;  
+	-moz-transition:background-color .25s ease-in;  
+	-o-transition:background-color .25s ease-in;  
+	transition:background-color .25s ease-in; 
+}
+
+#next:hover{
+	background-color:#5B77CC;
+	-webkit-transition:background-color .25s ease-in;  
+	-moz-transition:background-color .25s ease-in;  
+	-o-transition:background-color .25s ease-in;  
+	transition:background-color .25s ease-in;  
 }
 
 #formation_number{
@@ -24,6 +37,10 @@
 	bottom: 28px;
 	right: 98px;
 	text-align: center;
+}
+
+.color{
+	cursor:pointer;
 }
 
 .timeline{
@@ -81,6 +98,11 @@ circle{
 
 .header{
 	font-weight:bold;
+	cursor:normal;
+}
+
+.add_dancer{
+	cursor:pointer;
 }
 
 text{

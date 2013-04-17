@@ -27,7 +27,7 @@ window.sidebar = {
 
 		var color_list = "<table width='100%' class='table_of_colors'>";
 		for(var i=0;i<5;i++){
-			var color_item = "<tr><td height='25px' bgcolor='" + colors(i) + "' style='border:none'></td><input type='hidden' value='" + i + "'></input></tr>";
+			var color_item = "<tr><td class='color' height='25px' bgcolor='" + colors(i) + "' style='border:none'></td><input type='hidden' value='" + i + "'></input></tr>";
 			color_list += color_item;
 		}
 		color_list += "</table>";
