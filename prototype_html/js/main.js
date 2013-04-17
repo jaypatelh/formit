@@ -45,9 +45,10 @@ window.dance = {
 			}
 		});
 		if(cache){
-			this.formations = cache.formations;
-			this.circles = formations[0];
-			for(var i=1; i < this.formations; i++){
+			this.formations = JSON.parse(cache)
+			this.circles = this.formations[0];
+			this.renderThumb(0,this.circles);
+			for(var i=1; i < this.formations.length; i++){
 				$('#next').before("<div class='thumb'><svg></svg></div>");
 				this.renderThumb(i,this.formations[i]);
 			}
@@ -303,6 +304,9 @@ window.dance = {
 		obj.fillColor = 'white';
 		obj.dancer_name = name;
 		return obj;
+	},
+	saveState: function(){
+		sessionStorage.setItem('dance', JSON.stringify(dance.formations));
 	}
 }
 

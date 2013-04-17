@@ -1,8 +1,8 @@
 $(document).ready(function(){
 	sidebar.init();
-	dance.init();
 	dance.addVerticalLines();
 	dance.addHorizontalLines();
+	dance.init(sessionStorage.getItem('dance'));
 
 	$('#next').hammer().on('tap', function(){
 		$('#next').before("<div class='thumb'><svg></svg></div>");
@@ -40,6 +40,9 @@ $(document).ready(function(){
 			$('#formation_number').html(dance.f_id + 1);
 		}
 	});
+	$('.save').hammer().on('tap click', function(){
+		dance.saveState();
+	})
 	$('.timeline').hammer().on('tap', '.thumb', function(){
 		var curr_thumb = $(this);
 		var index = curr_thumb.parent().children('.thumb').index(curr_thumb);
