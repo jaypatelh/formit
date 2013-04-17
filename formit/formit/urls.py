@@ -16,4 +16,6 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
 
     url(r'^$', 'formitapp.views.home', name='home'),
+    url(r'^login_user$', 'formitapp.views.login_user', name='login_user'),
+    url(r'^register_user$', 'formitapp.views.register_user'),
 )
