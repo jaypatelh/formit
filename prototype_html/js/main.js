@@ -21,7 +21,7 @@ window.dance = {
 
 	svg: d3.select('#canvas').attr('height', SVG_HEIGHT).attr('width', SVG_WIDTH).attr('class', 'stage'),
 	
-	init: function(){
+	init: function(cache){
 		var obj = this;
 		this.svg.on('touchstart', function(e){
 			obj.deselectAll();
@@ -44,7 +44,18 @@ window.dance = {
 				dance.renderCircles();
 			}
 		});
-		this.formations.push(this.circles);
+		if(cache){
+			this.formations = cache.formations;
+			this.circles = formations[0];
+			for(var i=1; i < this.formations; i++){
+				$('#next').before("<div class='thumb'><svg></svg></div>");
+				this.renderThumb(i,this.formations[i]);
+			}
+			this.renderCircles();
+		}
+		else{
+			this.formations.push(this.circles);
+		}
 	},
 
 	addVerticalLines: function(){
