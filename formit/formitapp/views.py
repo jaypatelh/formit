@@ -10,6 +10,8 @@ from django.contrib.auth import authenticate, login, logout, views
 from models import *
 import os
 from django.core.validators import MaxLengthValidator
+import pymongo
+from pymongo import MongoClient
 
 def home(request):
 	c = Context({ "WHO": "WORLD!!!" })
@@ -67,3 +69,11 @@ class RegisterForm(forms.Form):
 class LoginForm(forms.Form):
   username = forms.CharField(max_length=100)
   password = forms.CharField(widget=forms.PasswordInput())
+
+def testMongo(request):
+  client = MongoClient() # might need to specify host and port on Heroku
+  db = client.formitdb
+  dancedata = db.dancedata
+  obj = {"yo": "bro", "how": "you"}
+  dancedata.insert(obj)
+  return HttpResponse('successfully inserted into mongo')
