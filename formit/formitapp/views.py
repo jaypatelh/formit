@@ -12,8 +12,12 @@ import os
 from django.core.validators import MaxLengthValidator
 
 def home(request):
-	c = Context({ "WHO": "WORLD!!!" })
-	return render_to_response("index.html", c, context_instance=RequestContext(request))
+  c = Context({ "WHO": "WORLD!!!" })
+  if(request.user.is_authenticated()):
+    return render_to_response("index.html", c, context_instance=RequestContext(request))
+  else:
+    return HttpResponse("You must login to see this page.")
+	
 
 def register_user(request):
   if request.method == 'POST':
