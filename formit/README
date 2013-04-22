@@ -1,3 +1,4 @@
 Starting mongodb:
 mongod --fork
 mongo (to access shell)
+use formitdb
