@@ -5,7 +5,7 @@ from django.template.context import Context, RequestContext
 from django.forms import ModelForm
 from django import forms
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout, views
 from models import *
 import os
@@ -16,7 +16,7 @@ def home(request):
   if(request.user.is_authenticated()):
     return render_to_response("index.html", c, context_instance=RequestContext(request))
   else:
-    return HttpResponse("You must login to see this page.")
+    return HttpResponseRedirect("/login_user")
 	
 
 def register_user(request):
