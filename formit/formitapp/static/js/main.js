@@ -217,48 +217,19 @@ window.dance = {
 	},
 
 	circledragmove: function(d) {
-		console.log("move");
-		var newX = d3.event.x;
-		var newY = d3.event.y;
-		var deltaX = newX - d.x;
-		var deltaY = newY - d.y;
-		d.x = newX;
-		d.y = newY;
+		d.x = d3.event.x;
+		d.y = d3.event.y;
 	  dance.svg.selectAll('g')
 	  	.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'});
 	  d3.event.sourceEvent.stopPropagation();
 	},
 
 	nameSelected: function(name){
-		var drag = d3.behavior.drag()
-								.on('drag', this.circledragmove)
-								.on('dragstart', this.circledragstart)
-								.on('dragend', this.circledragend);
 		var obj = this;
 		var dancer = this.createDancer(this.d_id, 50, 50, name);
 		this.d_id++;
 		this.circles.push(dancer);
-		this.svg.selectAll('g').data(this.circles, function(d){ return d.d_id})
-			.enter().append('svg:g')
-				.attr('transform', function(d){ return 'translate(' + [d.x,d.y]+ ')'})
-				.call(drag)
-				.on('touchmove', function(d){
-					d.class = 'selected_dancer'
-					d3.select(this).select('circle').attr('class', function(d){ return d.class});
-					})
-				.on('click', function(e){
-					d3.event.stopPropagation();
-				})
-				.append('svg:circle')
-					.attr('r', 1)
-					.attr('class', function(d){ return d.class })
-					.style('fill', function(d){ return d.fillColor})
-					.transition()
-						.attr('r', function(d){ return d.r})
-						.duration(300);
-		this.svg.selectAll('g').append('svg:text')
-			.text(function(d){ return d.dancer_name})
-			.attr('text-anchor', 'middle');
+		this.renderCircles();
 		dance.renderThumb(dance.f_id, dance.circles);
 	},
 
