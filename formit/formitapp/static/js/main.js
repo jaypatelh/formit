@@ -22,7 +22,8 @@ window.dance = {
 	svg: d3.select('#canvas').attr('height', SVG_HEIGHT).attr('width', SVG_WIDTH).attr('class', 'stage'),
 	
 	init: function(){
-		var obj = this;
+		var obj = this,
+		var cache = readState($('#dance_id').val();
 		this.svg.on('touchstart', function(e){
 			obj.deselectAll();
 			obj.renderCircles();	
@@ -44,7 +45,19 @@ window.dance = {
 				dance.renderCircles();
 			}
 		});
-		this.formations.push(this.circles);
+		if(cache){
+			this.formations = JSON.parse(cache)
+			this.circles = this.formations[0];
+			this.renderThumb(0,this.circles);
+			for(var i=1; i < this.formations.length; i++){
+				$('#next').before("<div class='thumb'><svg></svg></div>");
+				this.renderThumb(i,this.formations[i]);
+			}
+			this.renderCircles();
+		}
+		else{
+			this.formations.push(this.circles);
+		}
 	},
 
 	addVerticalLines: function(){
@@ -263,6 +276,12 @@ window.dance = {
 		obj.fillColor = 'white';
 		obj.dancer_name = name;
 		return obj;
+	},
+	readState: function(dance_id){
+		return sessionStorage.getItem('dance');
+	}
+	saveState: function(){
+		sessionStorage.setItem('dance', JSON.stringify(dance.formations));
 	}
 }
 

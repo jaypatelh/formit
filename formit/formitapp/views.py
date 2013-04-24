@@ -15,16 +15,14 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 def home(request):
-  c = Context({ "WHO": "WORLD!!!" })
   if(request.user.is_authenticated()):
-    return render_to_response("index.html", c, context_instance=RequestContext(request))
+    return render_to_response("index.html", context_instance=RequestContext(request))
   else:
     return HttpResponseRedirect("/login_user")
 
 def dance(request):
   c = Context({ "WHO": "WORLD!!!" })
-  return render_to_response("index.html", c, context_instance=RequestContext(request))
-	
+  return render_to_response("index.html", c, context_instance=RequestContext(request))	
 
 def register_user(request):
   if request.method == 'POST':
