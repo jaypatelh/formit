@@ -18,5 +18,7 @@ urlpatterns = patterns('',
     url(r'^$', 'formitapp.views.home', name='home'),
     url(r'^login_user$', 'formitapp.views.login_user', name='login_user'),
     url(r'^register_user$', 'formitapp.views.register_user'),
-    url(r'^testMongo$', 'formitapp.views.testMongo')
+    url(r'^testMongo$', 'formitapp.views.testMongo'),
+    url(r'^dance/(\d+)$', 'formitapp.views.dance'),
+    url(r'^save_dance/(\d+)$', 'formitapp.views.save_dance')
 )

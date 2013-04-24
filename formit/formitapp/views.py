@@ -12,6 +12,7 @@ import os
 from django.core.validators import MaxLengthValidator
 import pymongo
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 
 def home(request):
   c = Context({ "WHO": "WORLD!!!" })
@@ -58,7 +59,7 @@ def login_helper(request, username, password):
   user = authenticate(username=username, password=password)
   if user is not None and user.is_active:
     login(request, user)
-    request.session['username'] = username
+    request.session['user'] = user
     return HttpResponse('successful login')
   return HttpResponse('fail login')
 
@@ -85,3 +86,46 @@ def testMongo(request):
   obj = {"yo": "bro", "how": "you"}
   dancedata.insert(obj)
   return HttpResponse('successfully inserted into mongo')
+
+def new_dance(request):
+  title = request.POST['title']
+  dance = Dance(title = title, creator = request.session['user'])
+  dance.save()
+  return HttpResponseRedirect("/dance/"+dance.id)
+
+def dance(request, dance_id):
+  dance_obj = Dance.objects.filter(id=dance_id)
+  if request.user.is_authenticated():
+    if dance_obj.foreign_id: # if the dance already exists in mongo
+      # initialize connection to mongo
+      client = MongoClient()
+      db = client.formitdb
+      dancedata = db.dancedata
+      data = dancedata.find_one({"_id":ObjectId(dance_obj.foreign_id)}).data
+      c = Context({"data": data})
+      return render_to_response("index.html", c, context_instance=RequestContext(request))
+    else: # if the dance is new, not saved yet
+      return render(request, "index.html")
+  else:
+    return HttpResponseRedirect("/login_user")
+
+def save_dance(request, dance_id):
+  data = request.POST['data'] # data containing the dance data from front end
+
+  # initialize connection to mongo
+  client = MongoClient()
+  db = client.formitdb
+  dancedata = db.dancedata
+
+  # query sqlite for dance object
+  dance_obj = Dance.objects.filter(id=dance_id)
+  
+  if not dance_obj.foreign_id: # if saving for the first time
+    data_id = dancedata.insert({"data": data}) # insert into mongo
+    dance_obj.foreign_id = str(data_id) # save the id of the recently added mongo item in the local sqlite database
+    dance_obj.save()
+  else: # if saved before
+    foreign_id = ObjectId(dance_obj.foreign_id)
+    dancedata.update({"_id": foreign_id}, {"data": data})
+
+  return HttpResponse("saved dance successfully")
