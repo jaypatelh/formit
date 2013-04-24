@@ -2,7 +2,7 @@ $(document).ready(function(){
 	sidebar.init();
 	dance.addVerticalLines();
 	dance.addHorizontalLines();
-	dance.init(sessionStorage.getItem('dance'));
+	dance.init();
 	
 	$('#delete').on('click', function(){
 		dance.removeSelected();
@@ -19,7 +19,6 @@ $(document).ready(function(){
 	});
 	$('.stage').hammer().on('pinch', function(e){
 		console.log("Pinch Detected...")
-		console.log(e)
 	})
 	$('.stage').hammer().on('swipeleft', function(e){
 		if(e.gesture.touches.length > 0){
