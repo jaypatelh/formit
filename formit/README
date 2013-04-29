@@ -1,4 +1,15 @@
+Setting up mongodb for the first time ever:
+brew update
+brew install mongodb
+
+OR if you already have mongodb installed:
+brew update
+brew upgrade mongodb
+
 Starting mongodb:
 mongod --fork
+
+Access mongodb in console:
 mongo (to access shell)
 use formitdb
+db.dancedata.find() --> will print out all the data in the dancedata collection
