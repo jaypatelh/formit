@@ -1,2 +1,4 @@
 MYENV
 *.pyc
+venv
+.DS_Store
