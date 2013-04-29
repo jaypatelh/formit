@@ -88,6 +88,12 @@ def testMongo(request):
   return HttpResponse('successfully inserted into mongo')
 
 def new_dance(request):
+  form = DanceForm()
+  return render(request, 'dance.html', {
+    'form': form
+  })
+
+def create_dance(request):
   title = request.POST['title']
   dance = Dance(title = title, creator = request.session['user'])
   dance.save()
