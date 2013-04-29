@@ -34,7 +34,6 @@ def register_user(request):
       user.save()
   else:
     form = RegisterForm()
-
   return render(request, 'register.html', {
     'form': form
   })

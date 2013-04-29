@@ -280,8 +280,11 @@ window.dance = {
 	readState: function(dance_id){
 		return sessionStorage.getItem('dance');
 	}
-	saveState: function(){
+	saveState: function(dance_id){
 		sessionStorage.setItem('dance', JSON.stringify(dance.formations));
+		$.post('/save_dance/' + dance_id, {data : JSON.stringify(dance.formations)}, function(data){
+			console.log("Success!");
+		});
 	}
 }
 
