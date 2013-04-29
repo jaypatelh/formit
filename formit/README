@@ -13,3 +13,6 @@ Access mongodb in console:
 mongo (to access shell)
 use formitdb
 db.dancedata.find() --> will print out all the data in the dancedata collection
+
+After pushing to Heroku, start process on dyno by running:
+heroku ps:scale web=1
