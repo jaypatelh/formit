@@ -23,7 +23,7 @@ window.dance = {
 	
 	init: function(){
 		var obj = this,
-		var cache = readState($('#dance_id').val();
+		cache = obj.readState($('#dance_id').val());
 		this.svg.on('touchstart', function(e){
 			obj.deselectAll();
 			obj.renderCircles();	
@@ -279,7 +279,7 @@ window.dance = {
 	},
 	readState: function(dance_id){
 		return sessionStorage.getItem('dance');
-	}
+	},
 	saveState: function(dance_id){
 		sessionStorage.setItem('dance', JSON.stringify(dance.formations));
 		$.post('/save_dance/' + dance_id, {data : JSON.stringify(dance.formations)}, function(data){

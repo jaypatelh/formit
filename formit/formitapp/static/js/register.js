@@ -6,4 +6,10 @@ $(document).ready(function(){
 			console.log(data);
 		});
 	});
+	$("#submit_dance_btn").click(function(){
+		var title = $("#id_title").val();
+		$.post("create_dance", {title:title}, function(data){
+			console.log(data);
+		});
+	});
 });

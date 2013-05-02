@@ -27,14 +27,14 @@ window.sidebar = {
 
 		var color_list = "<table width='100%' class='table_of_colors'>";
 		for(var i=0;i<5;i++){
-			var color_item = "<tr><td class='color' height='25px' bgcolor='" + colors(i) + "' style='border:none'></td><input type='hidden' value='" + i + "'></input></tr>";
+			var color_item = "<tr><td height='25px' bgcolor='" + colors(i) + "' style='border:none'></td><input type='hidden' value='" + i + "'></input></tr>";
 			color_list += color_item;
 		}
 		color_list += "</table>";
 
 		$(".blocks").append("<li>" + color_list + "</li>");
 
-		$(".table_of_colors td").hammer().on('tap click',function(){
+		$(".table_of_colors td").hammer().on('tap',function(){
 			var val = $(this).siblings("input").val();
 			$(".table_of_colors td").css({
 				'border': 'none',
